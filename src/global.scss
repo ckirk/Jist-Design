@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900');
+
+// VARIABLES
+$bkg-dark: rgba(50,50,50,1);
+$bkg-light: rgba(255,255,255,1);
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  color: #fff;
+}
+
+#container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  // gradient
+  background: $bkg-light;
+  background: -moz-radial-gradient(70% 50%, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+  background: -webkit-gradient(radial, 70% 50%, 0px, center center, 100%, color-stop(0%, $bkg-light), color-stop(100%, $bkg-dark));
+  background: -webkit-radial-gradient(70% 50%, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+  background: -o-radial-gradient(70% 50%, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+  background: -ms-radial-gradient(70% 50%, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+  background: radial-gradient(ellipse at 70% 50%, $bkg-light 0%, $bkg-dark 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#aaaaaa', GradientType=1 );
+  
+  @media only screen and (max-width : 768px) {;
+    // gradient
+    background: $bkg-light;
+    background: -moz-radial-gradient(center, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+    background: -webkit-gradient(radial, center, 0px, center center, 100%, color-stop(0%, $bkg-light), color-stop(100%, $bkg-dark));
+    background: -webkit-radial-gradient(center, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+    background: -o-radial-gradient(center, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+    background: -ms-radial-gradient(center, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+    background: radial-gradient(ellipse at center, $bkg-light 0%, $bkg-dark 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#aaaaaa', GradientType=1 );
+  }
+
+  #main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #fff;
+    padding: 40px;
+    #header {
+      h1 {
+        font-size: 4em;
+        font-weight: 600;
+        margin: 0;
+        @media only screen and (max-width : 768px) {;
+          font-size: 3.5em;
+        }
+      }
+      span {
+        font-weight: 100;
+      }
+      h2 {
+        font-size: 1.2em;
+        font-weight: 100;
+        margin: 0;
+        margin-top: 5px;
+      }
+    }
+    #menu {
+      margin: 50px;
+      width: 500px;
+      @media only screen and (max-width : 768px) {;
+        width: 100%;
+        margin: 0;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+        font-size: 1.6em;
+        font-weight: 100;
+        li {
+          cursor: pointer;
+          padding: 5px 10px;
+          &:hover {
+            background-color: #fff;
+            color: #727272;
+            font-weight: 300;
+          }
+          &.active {
+            background-color: #fff;
+            color: #727272;
+            font-weight: 300;
+          }
+        }
+      }
+    }
+  }
+  #darken {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    @media only screen and (min-width : 768px) {;
+      display: none;
+    }
+  }
+  #left {
+    width: 30%;
+    height: 100%;
+    float: left;
+
+    @media only screen and (max-width : 768px) {;
+      display: none;
+    }
+  }
+  #showcase {
+    overflow: hidden;    
+    height: 100%;
+  }
+}
+
+canvas { 
+  width: 100%; 
+  height: 100% 
+}
