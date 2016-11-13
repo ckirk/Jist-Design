@@ -1,75 +1,124 @@
-// import jquery
-var $ = require("jquery");
-var THREE = require("three");
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router'
 
 // import styles
 require("./global.scss");
 
-// import external js files
-cats = require('./cats.js');
-spikey = require('./spikey.js');
+// import jquery
+var $ = require("jquery");
 
-// test for external js import
-console.log(cats);
+// import three.js
+var THREE = require("three");
 
-// test for jquery
-$(function() {
-	console.log('app loaded');
+var cats = require('./cats.js');
+var spikey = require('./spikey.js');
 
 
-	// CREATE THE SCENE
-	var scene = new THREE.Scene();
+// React Jazz
+var App = React.createClass({
+  render () {
+    return (
+      <div id="container">
+        <div id="left"></div>
+        <div id="showcase">
+          <Router history={hashHistory}>
 
-	// attributes: field of view, aspect ratio, near clipping pane, far clipping pane
-	var camera = new THREE.PerspectiveCamera( 75, $('#showcase').width() / $('#showcase').height(), 0.1, 1000 );
+            <Route path='/'>
 
-	var renderer = new THREE.WebGLRenderer( { alpha: true });
-	renderer.setSize( $('#showcase').width(), $('#showcase').height() );
-	renderer.setClearColor( 0x000000, 0 ); // the default (clear background)
-	document.getElementById("showcase").appendChild(renderer.domElement);
+              <IndexRoute component={Home} />
+              <Route path='work' component={Work} />
+              <Route path='process' component={Process} />
+              <Route path='services' component={Services} />
 
-	// material -> takes object of properties (color)
-	// var material = new THREE.MeshBasicMaterial( { color: 0x99ffdd } );
-	var material = new THREE.MeshPhongMaterial( { color: 0x99ffdd, specular: 0x555555, shininess: 0 } );
+              <Route path='*' component={NotFound} />
 
+            </Route>
 
-	// MODEL
-	// instantiate a loader
-	var loader = new THREE.ObjectLoader();
-	var object = loader.parse( spikey );
-	scene.add( object );
+          </Router>
+        </div>
+        <div id="darken"></div>
+        <div id="main">
+          <Header />
+          <Menu />
+        </div>
+      </div>
+    )
+  }
+})
 
+var Header = React.createClass({
+  render () {
+    return (
+      <div id="header">
+        <h1>JIST <span>Design</span></h1>
+        <h2>Industrial Design // Electronics // Prototyping // Manufacturing</h2>
+      </div>
+    )
+  }
+})
 
-	// LIGHTING
-	// add a light
-	var light = new THREE.DirectionalLight( 0xffffff, 0.5 );
-	light.position.set( 0, 1, 1 ).normalize();
-	scene.add(light);
+var Menu = React.createClass({
+  render () {
+    return (
+      <div id="menu">
+        <ul>
+          <li>Our Work</li>
+          <li>Our Process</li>
+          <li>Services</li>
+          <li>Contact</li>
+        </ul>
+      </div>
+    )
+  }
+})
 
-	// add ambient light
-	var ambientLight = new THREE.AmbientLight( 0xffffff, 0.5 ); // soft white light
-	scene.add( ambientLight );
+var Home = React.createClass({
+  render () {
+    return (
+      <h1>Home</h1>
+    )
+  }
+})
 
-	// CAMERA
-	// add a camera
-	camera.position.z = 2.5; // place camera (displaced from center)
+var Work = React.createClass({
+  render () {
+    return (
+      <h1>Work</h1>
+    )
+  }
+})
 
+var Process = React.createClass({
+  render () {
+    return (
+      <h1>Process</h1>
+    )
+  }
+})
 
-	// RENDER THE SCENE
-	// This creates a loop that causes the renderer to draw the scene 60 times per second
-	function render() {
-		requestAnimationFrame( render );
-		object.rotation.x += 0.001;
-		object.rotation.y += 0.001;
-		renderer.render( scene, camera );
-	}
-	window.addEventListener( 'resize', onWindowResize, false );
-	render();
+var Services = React.createClass({
+  render () {
+    return (
+      <h1>Services</h1>
+    )
+  }
+})
 
-	function onWindowResize() {
-	    camera.aspect = $('#showcase').width() / $('#showcase').height();
-	    camera.updateProjectionMatrix();
-	    renderer.setSize( $('#showcase').width(), $('#showcase').height() );
-	    render();
-	}
-});
+var Contact = React.createClass({
+  render () {
+    return (
+      <h1>Contact</h1>
+    )
+  }
+})
+
+var NotFound = React.createClass({
+  render () {
+    return (
+      <h1>Not Found</h1>
+    )
+  }
+})
+
+ReactDOM.render(<App />, document.getElementById('app'))
