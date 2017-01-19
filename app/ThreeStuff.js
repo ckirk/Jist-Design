@@ -1,9 +1,8 @@
 var THREE = require("three");
 var $ = require("jquery");
-var spikey = require('./spikey.js');
+var spikeyModel = require('./spikey_model.js');
 
-var threeExample = function() {
-	var THREE = require("three");
+var Inject3dModel = function() {
 
 	var scene = new THREE.Scene();
 	var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
@@ -15,12 +14,12 @@ var threeExample = function() {
 	var renderer = new THREE.WebGLRenderer( { alpha: true });
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.setClearColor( 0x000000, 0 ); // the default (clear background)
-	document.getElementById("showcase").appendChild(renderer.domElement);
+	document.getElementById("3dInject").appendChild(renderer.domElement);
 
 	// MODEL
 	var loader = new THREE.ObjectLoader();
-	var model = loader.parse( spikey );
-	scene.add( model )
+	var model = loader.parse(spikeyModel);
+	scene.add(model)
 
 	// LIGHT (directional)
 	var light = new THREE.DirectionalLight( 0xffffff, 0.5 );
@@ -32,19 +31,29 @@ var threeExample = function() {
 	scene.add( ambientLight );
 
 	// CAMERA
-	camera.position.z = 2; // place camera (displaced from center)
-	camera.position.x = 0.6;
+	// place camera (displaced from center)
+	camera.position.z = 2;
+	camera.position.x = 0; // centered
 
+	// RENDER THE SCENE
+  // This creates a loop that causes the renderer to draw the scene 60 times per second
 	var render = function () {
-	  requestAnimationFrame( render );
-
+	  requestAnimationFrame(render);
 	  model.rotation.x += 0.001;
 	  model.rotation.y += 0.001;
-
 	  renderer.render(scene, camera);
+	};
+
+	// Keep 3D model centered when window resizes
+	window.addEventListener( 'resize', onWindowResize, false );
+
+	function onWindowResize() {
+		camera.aspect = window.innerWidth/window.innerHeight;
+		camera.updateProjectionMatrix();
+		renderer.setSize( window.innerWidth, window.innerHeight );
 	};
 
 	render();
 }
 
-module.exports = threeExample;
+module.exports = Inject3dModel;

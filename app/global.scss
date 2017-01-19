@@ -21,127 +21,128 @@ body {
 }
 #app, #app-container {
   min-height: 100%;
-  #main {
-    display: flex;
-    flex-direction: column;
-    min-height: 100%;
+}
+
+#overlay {
+  position: absolute;
+  // background-color: rgba(0,0,0,.1);
+  #header {
+    flex: 0 0 auto;
+    padding: 30px;
     z-index: 2;
-    a { z-index: 3; }
-    #header {
-      flex: 0 0 auto;
-      padding: 30px;
-      z-index: 2;
-      h1 {
-        font-size: 4em;
-        font-weight: 600;
-        margin: 0;
-        @media only screen and (max-width : 768px) {;
-          font-size: 3.5em;
-        }
-      }
-      span {
-        font-weight: 100;
-      }
-      h2 {
-        font-size: 1.2em;
-        font-weight: 100;
-        margin: 0;
-        margin-top: 5px;
+    h1 {
+      font-size: 4em;
+      font-weight: 600;
+      margin: 0;
+      @media only screen and (max-width : 768px) {;
+        font-size: 3.5em;
       }
     }
-    #body {
-      flex: 1 0 auto;
-      display: flex;
-      flex-direction: row;
-      z-index: 2;
-      #menu {
-        flex: 0 0 auto;
-        width: 200px;
-        padding-left: 30px;
-        ul {
-          margin: 25px 0;
-          list-style-type: none;
-          padding: 0;
-          font-size: 1.6em;
-          font-weight: 100;
-          li {
-            cursor: pointer;
-            padding: 5px 10px;
-            &:hover {
-              background-color: #fff;
-              color: #727272;
-              font-weight: 300;
-            }
-            &.active {
-              background-color: #fff;
-              color: #727272;
-              font-weight: 300;
-            }
-          }
-        }
-      }
-      #content {
-        flex: 1 0 auto;
-        background-color: rgba(255,255,255,0.5);
-        color: #848484;
-        margin: 50px;
-        margin-top: 25px;
-        padding: 30px;
-        h1 { margin: 0; }
-      }
+    span {
+      font-weight: 100;
     }
-    #footer {
-      flex: 0 0 auto;
-      z-index: 2;
+    h2 {
+      font-size: 1.2em;
+      font-weight: 100;
+      margin: 0;
+      margin-top: 5px;
     }
   }
-  #background {
-    background-color: pink;
+  #menu {
+    flex: 0 0 auto;
+    width: 500px;
+    padding-left: 30px;
+    ul {
+      margin: 25px 0;
+      list-style-type: none;
+      padding: 0;
+      font-size: 1.6em;
+      font-weight: 100;
+      li {
+        cursor: pointer;
+        padding: 5px 10px;
+        &:hover {
+          background-color: #fff;
+          color: #727272;
+          font-weight: 300;
+        }
+      }
+      a.active li {
+        border-left: 5px solid #fff;
+      }
+    }
+  }
+}
+
+#content {
+  #contentBox {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    min-height: 500px;
+    min-width: 500px;
+    padding: 20px;
+    margin: 30px;
+    background-color: rgba(0,0,0,.1);
+    h1 {
+      margin: 0;
+    }
+  }
+  #ourWork {
     position: absolute;
     top: 0;
+    bottom: 0;
     left: 0;
     right: 0;
-    bottom: 0;
-    z-index: -1;
+    background-color: lightgreen;
+    background: url('https://static.pexels.com/photos/10651/photo-1432821596592-e2c18b78144f.jpeg') no-repeat center center fixed;
+    background-size: cover;
+    #controls {
+      min-height: 50px;
+      width: 100%;
+      background-color: rgb(39, 221, 221);
+      position: absolute;
+      bottom: 0;
+      text-align: center;
+      .navButton {
+        display: inline-block;
+        background-color: #000;
+        padding: 10px;
+        cursor: pointer;
+      }
+    }
+  }
+}
 
+#background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  // gradient (66% to right)
+  background: $bkg-light;
+  background: -moz-radial-gradient(50% 50%, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+  background: -webkit-gradient(radial, 50% 50%, 0px, center center, 100%, color-stop(0%, $bkg-light), color-stop(100%, $bkg-dark));
+  background: -webkit-radial-gradient(50% 50%, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+  background: -o-radial-gradient(50% 50%, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+  background: -ms-radial-gradient(50% 50%, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+  background: radial-gradient(ellipse at 50% 50%, $bkg-light 0%, $bkg-dark 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#aaaaaa', GradientType=1 );
+
+  @media only screen and (max-width : 768px) {;
     // gradient
     background: $bkg-light;
-    background: -moz-radial-gradient(70% 50%, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
-    background: -webkit-gradient(radial, 70% 50%, 0px, center center, 100%, color-stop(0%, $bkg-light), color-stop(100%, $bkg-dark));
-    background: -webkit-radial-gradient(70% 50%, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
-    background: -o-radial-gradient(70% 50%, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
-    background: -ms-radial-gradient(70% 50%, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
-    background: radial-gradient(ellipse at 70% 50%, $bkg-light 0%, $bkg-dark 100%);
+    background: -moz-radial-gradient(center, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+    background: -webkit-gradient(radial, center, 0px, center center, 100%, color-stop(0%, $bkg-light), color-stop(100%, $bkg-dark));
+    background: -webkit-radial-gradient(center, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+    background: -o-radial-gradient(center, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+    background: -ms-radial-gradient(center, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+    background: radial-gradient(ellipse at center, $bkg-light 0%, $bkg-dark 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#aaaaaa', GradientType=1 );
-
-    @media only screen and (max-width : 768px) {;
-      // gradient
-      background: $bkg-light;
-      background: -moz-radial-gradient(center, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
-      background: -webkit-gradient(radial, center, 0px, center center, 100%, color-stop(0%, $bkg-light), color-stop(100%, $bkg-dark));
-      background: -webkit-radial-gradient(center, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
-      background: -o-radial-gradient(center, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
-      background: -ms-radial-gradient(center, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
-      background: radial-gradient(ellipse at center, $bkg-light 0%, $bkg-dark 100%);
-      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#aaaaaa', GradientType=1 );
-    }
-    #left {
-      width: 30%;
-      height: 100%;
-      float: left;
-
-      @media only screen and (max-width : 768px) {;
-        display: none;
-      }
-    }
-    #showcase {
-      overflow: hidden;
-      height: 100%;
-      canvas {
-        width: 100%;
-        height: 100%;
-        filter: blur(3px);
-      }
-    }
+  }
+  #threeBlur {
+    filter: blur(3px);
   }
 }

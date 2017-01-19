@@ -5,10 +5,10 @@ const Menu = (props) => {
   return (
     <div id="menu">
       <ul>
-        <Link to='/work'><li>Our Work</li></Link>
-        <Link to='/process'><li>Our Process</li></Link>
-        <Link to='/services'><li>Services</li></Link>
-        <Link to='/contact'><li>Contact</li></Link>
+        <Link to='/work' activeClassName="active"><li>Our Work</li></Link>
+        <Link to='/process' activeClassName="active"><li>Our Process</li></Link>
+        <Link to='/services' activeClassName="active"><li>Services</li></Link>
+        <Link to='/contact' activeClassName="active"><li>Contact</li></Link>
       </ul>
     </div>
   )

@@ -5,19 +5,25 @@ import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 're
 // Component Imports
 import Process from './components/Process';
 import Contact from './components/Contact';
-import Background from './components/Background';
 import Work from './components/Work';
 import Services from './components/Services';
 import Home from './components/Home';
 import Menu from './components/Menu';
 
 
+// 3D Shazz
+import Inject3dModel from './ThreeStuff';
+
 // REACT-ROUTER
 class App extends Component {
+  componentDidMount() {
+    Inject3dModel();
+  }
+
   render () {
     return (
       <Router history={hashHistory}>
-        <Route path='/' component={BaseApp}>
+        <Route path='/' component={Base}>
           <IndexRoute component={Home} />
           <Route path='work' component={Work} />
           <Route path='process' component={Process} />
@@ -30,21 +36,40 @@ class App extends Component {
   }
 }
 
-const BaseApp = (props) => {
+const Showcase = (props) => (
+  <div id="ourWork">
+    {props.pushChildren}
+  </div>
+)
+
+const ContentBox = (props) => (
+  <div id="contentBox">
+    {props.pushChildren}
+  </div>
+)
+
+const Base = (props) => {
   return (
     <div id="app-container">
-      <div id="main">
+      <div id="background">
+        <div id="threeBlur">
+          <div id="3dInject"></div>
+        </div>
+      </div>
+      <div id="content">
+        { props.location.pathname == '/work' ?
+          <Showcase pushChildren={props.children}/> :
+          <ContentBox pushChildren={props.children}/>
+        }
+      </div>
+      <div id="overlay">
         <Link to='/'>
           <div id="header">
             <h1>JIST <span>Design</span></h1>
             <h2>Industrial Design // Electronics // Prototyping // Manufacturing</h2>
           </div>
         </Link>
-        <div id="body">
-          <Menu />
-          {props.children}
-        </div>
-        <div id="footer"></div>
+        <Menu />
       </div>
     </div>
   )
