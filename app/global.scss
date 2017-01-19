@@ -94,9 +94,32 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: lightgreen;
-    background: url('https://static.pexels.com/photos/10651/photo-1432821596592-e2c18b78144f.jpeg') no-repeat center center fixed;
-    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    #viewer {
+      height: 500px;
+      width: 500px;
+      border: 10px solid #fff;
+      overflow: hidden;
+      #slideWrapper {
+        display: flex;
+        transition: all .5s ease;
+      }
+    }
+    .slide {
+      height: 100%;
+      width: 100%;
+      background-color: lightpink;
+      flex: 0 0 500px;
+      background-size: cover;
+      h1 {
+        font-size: 10em;
+        text-align: center;
+        line-height: 500px;
+        margin: 0;
+      }
+    }
     #controls {
       min-height: 50px;
       width: 100%;

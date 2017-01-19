@@ -37,7 +37,7 @@ class App extends Component {
 }
 
 const Showcase = (props) => (
-  <div id="ourWork">
+  <div>
     {props.pushChildren}
   </div>
 )
