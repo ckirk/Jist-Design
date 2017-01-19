@@ -3,15 +3,15 @@ import React, { PropTypes } from 'react';
 const slideData = [
   {
     title: 'TEST',
-    image: 'https://static.pexels.com/photos/10651/photo-1432821596592-e2c18b78144f.jpeg',
+    image: '../images/snagtag_enclosure',
     description: 'Lorem ipsum dolor sit amet, qui in saepe percipitur. Te ius vidit possim iudicabit, qui ne habemus intellegebat. Magna assum propriae ne ius. Sit no nihil nostro, vitae appellantur an has. In quo tantas fabulas, an cum copiosae abhorreant, duo an decore ceteros.'
   }, {
     title: 'BEST',
-    image: '../images/a.jpg',
+    image: '../images/raspi_enclosure',
     description: 'Lorem ipsum dolor sit amet, qui in saepe percipitur. Te ius vidit possim iudicabit, qui ne habemus intellegebat. Magna assum propriae ne ius. Sit no nihil nostro, vitae appellantur an has. In quo tantas fabulas, an cum copiosae abhorreant, duo an decore ceteros.'
   }, {
     title: 'JEST',
-    image: '../images/iBeacon.png',
+    image: '../images/a.png',
     description: 'Lorem ipsum dolor sit amet, qui in saepe percipitur. Te ius vidit possim iudicabit, qui ne habemus intellegebat. Magna assum propriae ne ius. Sit no nihil nostro, vitae appellantur an has. In quo tantas fabulas, an cum copiosae abhorreant, duo an decore ceteros.'
   },
 ];

@@ -123,14 +123,18 @@ body {
     #controls {
       min-height: 50px;
       width: 100%;
-      background-color: rgb(39, 221, 221);
+      // background-color: rgba(0,0,0,0.5);
       position: absolute;
       bottom: 0;
       text-align: center;
       .navButton {
         display: inline-block;
-        background-color: #000;
+        background-color: #fff;
+        color: #4a4a4a;
         padding: 10px;
+        margin: 2px;
+        margin-bottom: 30px;
+        user-select: none;
         cursor: pointer;
       }
     }

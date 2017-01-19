@@ -9,6 +9,7 @@ import Work from './components/Work';
 import Services from './components/Services';
 import Home from './components/Home';
 import Menu from './components/Menu';
+import Slider from './components/Slider';
 
 
 // 3D Shazz
@@ -29,6 +30,7 @@ class App extends Component {
           <Route path='process' component={Process} />
           <Route path='services' component={Services} />
           <Route path='contact' component={Contact} />
+          <Route path='slider' component={Slider} />
           <Route path='*' component={NotFound} />
         </Route>
       </Router>
