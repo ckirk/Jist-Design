@@ -1,25 +1,15 @@
 import React, { PropTypes } from 'react';
-
-const slideData = [
-  {
-    title: 'TEST',
-    image: '../images/snagtag_enclosure',
-    description: 'Lorem ipsum dolor sit amet, qui in saepe percipitur. Te ius vidit possim iudicabit, qui ne habemus intellegebat. Magna assum propriae ne ius. Sit no nihil nostro, vitae appellantur an has. In quo tantas fabulas, an cum copiosae abhorreant, duo an decore ceteros.'
-  }, {
-    title: 'BEST',
-    image: '../images/raspi_enclosure',
-    description: 'Lorem ipsum dolor sit amet, qui in saepe percipitur. Te ius vidit possim iudicabit, qui ne habemus intellegebat. Magna assum propriae ne ius. Sit no nihil nostro, vitae appellantur an has. In quo tantas fabulas, an cum copiosae abhorreant, duo an decore ceteros.'
-  }, {
-    title: 'JEST',
-    image: '../images/a.png',
-    description: 'Lorem ipsum dolor sit amet, qui in saepe percipitur. Te ius vidit possim iudicabit, qui ne habemus intellegebat. Magna assum propriae ne ius. Sit no nihil nostro, vitae appellantur an has. In quo tantas fabulas, an cum copiosae abhorreant, duo an decore ceteros.'
-  },
-];
+import slideData from '../slideData';
 
 class Work extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { page: 0, length: slideData.length, slidePosition: 0, viewerWidth: 500 }
+    this.state = {
+      page: 0,
+      length: slideData.length,
+      slidePosition: 0,
+      viewerWidth: window.innerWidth
+    }
   };
 
   handleNext = () => {
@@ -51,7 +41,10 @@ class Work extends React.Component {
   };
 
   updateViewerWidth = () => {
-    // this.setState({ viewerWidth: $(window).width() });
+    this.setState({
+      viewerWidth: window.innerWidth,
+      slidePosition: this.state.page * window.innerWidth
+    });
     console.log('width', window.innerWidth);
   }
 
@@ -71,7 +64,7 @@ class Work extends React.Component {
 
     // Build slides from slideData Object
     const slides = slideData.map((object, index) =>
-      <Slide key={index} title={object.title} image={object.image} />
+      <Slide key={index} title={object.title} image={object.image} description={object.description} />
     );
 
     return (
@@ -82,11 +75,13 @@ class Work extends React.Component {
           </div>
         </div>
         <div id="controls">
+          <div id="arrowContainer">
+            <div id="arrowLeft" className="arrow"><i className="fa fa-chevron-left" aria-hidden="true"></i></div>
+            <div id="arrowRight" className="arrow"><i className="fa fa-chevron-right" aria-hidden="true"></i></div>
+          </div>
           <div id="back" className="navButton" onClick={this.handlePrevious}>
-            &lt; Back
           </div>
           <div id="next" className="navButton" onClick={this.handleNext}>
-            Next &gt;
           </div>
         </div>
       </div>
@@ -99,7 +94,10 @@ const Slide = (props) => (
       background: `url("${props.image}") no-repeat center center`,
       backgroundSize: 'cover'
     }}>
-    <h1>{props.title}</h1>
+    <div className='detailsBox'>
+      {props.title != '' ? <h2>{props.title}</h2> : null }
+      <p>{props.description}</p>
+    </div>
   </div>
 )
 

@@ -45,8 +45,10 @@ const Showcase = (props) => (
 )
 
 const ContentBox = (props) => (
-  <div id="contentBox">
-    {props.pushChildren}
+  <div id="contentBoxContainer" >
+    <div id="contentBox">
+      {props.pushChildren}
+    </div>
   </div>
 )
 
@@ -59,7 +61,7 @@ const Base = (props) => {
         </div>
       </div>
       <div id="content">
-        { props.location.pathname == '/work' ?
+        { props.location.pathname == '/work' || props.location.pathname == '/' ?
           <Showcase pushChildren={props.children}/> :
           <ContentBox pushChildren={props.children}/>
         }
