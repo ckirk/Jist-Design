@@ -61,7 +61,6 @@ class Work extends React.Component {
   }
 
   render() {
-
     // Build slides from slideData Object
     const slides = slideData.map((object, index) =>
       <Slide key={index} title={object.title} image={object.image} description={object.description} />
@@ -75,13 +74,11 @@ class Work extends React.Component {
           </div>
         </div>
         <div id="controls">
-          <div id="arrowContainer">
-            <div id="arrowLeft" className="arrow"><i className="fa fa-chevron-left" aria-hidden="true"></i></div>
-            <div id="arrowRight" className="arrow"><i className="fa fa-chevron-right" aria-hidden="true"></i></div>
-          </div>
           <div id="back" className="navButton" onClick={this.handlePrevious}>
+            <div id="arrowLeft" className="arrow"><i className="fa fa-chevron-left" aria-hidden="true"></i></div>
           </div>
           <div id="next" className="navButton" onClick={this.handleNext}>
+            <div id="arrowRight" className="arrow"><i className="fa fa-chevron-right" aria-hidden="true"></i></div>
           </div>
         </div>
       </div>

@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 
 const Contact = (props) => {
   return (
-    <div id="content">
+    <div>
       <h1>Contact</h1>
       <p>Get in touch.</p>
       <div id="contactBody">

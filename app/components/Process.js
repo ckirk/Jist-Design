@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 
 const Process = (props) => {
   return (
-    <div id="content">
+    <div>
       <h1>Process</h1>
     </div>
   )

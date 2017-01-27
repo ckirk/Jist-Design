@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 // Component Imports
 import Process from './components/Process';
@@ -38,12 +39,6 @@ class App extends Component {
   }
 }
 
-const Showcase = (props) => (
-  <div>
-    {props.pushChildren}
-  </div>
-)
-
 const ContentBox = (props) => (
   <div id="contentBoxContainer" >
     <div id="contentBox">
@@ -62,14 +57,23 @@ const Base = (props) => {
       </div>
       <div id="content">
         { props.location.pathname == '/work' || props.location.pathname == '/' ?
-          <Showcase pushChildren={props.children}/> :
+          <ReactCSSTransitionGroup
+            transitionName="ourWork"
+            transitionAppear={true}
+            transitionAppearTimeout={500}
+            transitionEnterTimeout={500}
+            transitionLeaveTimeout={500}>
+            {props.children}
+          </ReactCSSTransitionGroup> :
           <ContentBox pushChildren={props.children}/>
         }
       </div>
       <div id="overlay">
         <Link to='/'>
           <div id="header">
-            <h1>JIST <span>Design</span></h1>
+            <h1>
+              JIST <span>Design</span>
+            </h1>
             <h2>Industrial Design // Electronics // Prototyping // Manufacturing</h2>
           </div>
         </Link>
