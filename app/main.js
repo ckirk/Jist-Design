@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import App from './app';
 
 // Style Import
-import './global.scss';
 import 'font-awesome/css/font-awesome.css';
+import './global.scss';
 
 ReactDOM.render(<App />, document.getElementById('app'))
