@@ -10,6 +10,7 @@ import Work from './components/Work';
 import Services from './components/Services';
 import Home from './components/Home';
 import Menu from './components/Menu';
+import MobileMenu from './components/MobileMenu';
 import Slider from './components/Slider';
 
 
@@ -47,41 +48,69 @@ const ContentBox = (props) => (
   </div>
 )
 
-const Base = (props) => {
-  return (
-    <div id="app-container">
-      <div id="background">
-        <div id="threeBlur">
-          <div id="3dInject"></div>
+class Base extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { open: false }
+  };
+
+  // handleOpen = () => {
+  //   this.setState({ open: true });
+  // };
+  //
+  // handleClose = () => {
+  //   this.setState({ open: false });
+  // };
+
+  toggleOpen = () => {
+    this.setState({ open: !this.state.open });
+  }
+
+  render() {
+    return (
+      <div id="app-container">
+
+        <div id="background">
+          <div id="threeBlur">
+            <div id="3dInject"></div>
+          </div>
         </div>
-      </div>
-      <div id="content">
-        { props.location.pathname == '/work' || props.location.pathname == '/' ?
-          <ReactCSSTransitionGroup
-            transitionName="ourWork"
-            transitionAppear={true}
-            transitionAppearTimeout={500}
-            transitionEnterTimeout={500}
-            transitionLeaveTimeout={500}>
-            {props.children}
-          </ReactCSSTransitionGroup> :
-          <ContentBox pushChildren={props.children}/>
-        }
-      </div>
-      <div id="overlay">
-        <Link to='/'>
+
+        <div id="content">
+          { this.props.location.pathname == '/work' || this.props.location.pathname == '/' ?
+            <ReactCSSTransitionGroup
+              transitionName="ourWork"
+              transitionAppear={true}
+              transitionAppearTimeout={500}
+              transitionEnterTimeout={500}
+              transitionLeaveTimeout={500}>
+              {this.props.children}
+            </ReactCSSTransitionGroup> :
+            <ContentBox pushChildren={this.props.children}/>
+          }
+        </div>
+
+        <div id="overlay">
           <div id="header">
-            <h1>
-              JIST <span>Design</span>
-            </h1>
+            <Link to='/'>
+              <h1>
+                JIST <span>Design</span>
+              </h1>
+            </Link>
             <h2>Industrial Design // Electronics // Prototyping // Manufacturing</h2>
           </div>
-        </Link>
-        <Menu />
+          <Menu />
+        </div>
+
+        <div id="menu-btn" onClick={this.toggleOpen}>
+          <i className="fa fa-bars" aria-hidden="true"></i>
+        </div>
+
+        <MobileMenu open={this.state.open} closeMenu={this.toggleOpen} />
       </div>
-    </div>
-  )
-}
+    )
+  }
+};
 
 const NotFound = (props) => {
   return (
