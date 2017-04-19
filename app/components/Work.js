@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import slideData from '../slideData';
 
 class Work extends React.Component {
@@ -88,14 +88,40 @@ class Work extends React.Component {
 
 const Slide = (props) => (
   <div className='slide' style={{
-      background: `url("${props.image}") no-repeat center center`,
-      backgroundSize: 'cover'
+      backgroundImage: `url("${props.image}")`
     }}>
-    <div className='detailsBox'>
-      {props.title != '' ? <h2>{props.title}</h2> : null }
-      <p>{props.description}</p>
-    </div>
+    <DetailsBox title={props.title} description={props.description}/>
   </div>
 )
+
+class DetailsBox extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: window.innerWidth > 768 ? true : false,
+      mobile: window.innerWidth > 768 ? false : true
+    }
+  };
+
+  toggleOpen = () => {
+    if (this.state.mobile) {
+      this.setState({ open: !this.state.open });
+    }
+  };
+
+  render() {
+    if (this.props.description != '') {
+      return (
+        <div className={'detailsBox noselect' + (this.props.open ? ' open' : '' )} 
+          onClick={this.toggleOpen} >
+          {this.props.title != '' ? <h2>{this.props.title}</h2> : null }
+          <p>{this.props.description}</p>
+        </div>
+      )
+    } else {
+      return ( null )
+    }
+  }
+}
 
 export default Work;

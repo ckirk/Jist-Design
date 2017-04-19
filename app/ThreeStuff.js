@@ -50,7 +50,8 @@ var Inject3dModel = function() {
 	function onWindowResize() {
 		camera.aspect = window.innerWidth/window.innerHeight;
 		camera.updateProjectionMatrix();
-		renderer.setSize( window.innerWidth, window.innerHeight );
+		renderer.setSize( document.getElementById('app').offsetWidth, window.innerHeight );
+		// console.log('width', document.getElementById('app').offsetWidth);
 	};
 
 	render();

@@ -54,14 +54,6 @@ class Base extends React.Component {
     this.state = { open: false }
   };
 
-  // handleOpen = () => {
-  //   this.setState({ open: true });
-  // };
-  //
-  // handleClose = () => {
-  //   this.setState({ open: false });
-  // };
-
   toggleOpen = () => {
     this.setState({ open: !this.state.open });
   }
@@ -99,7 +91,7 @@ class Base extends React.Component {
             </Link>
             <h2>Industrial Design // Electronics // Prototyping // Manufacturing</h2>
           </div>
-          <Menu />
+          <Menu pathName={this.props.location.pathname}/>
         </div>
 
         <div id="menu-btn" onClick={this.toggleOpen}>

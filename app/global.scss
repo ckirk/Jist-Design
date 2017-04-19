@@ -4,8 +4,7 @@
 $bkg-dark: rgba(50,50,50,1);
 $bkg-light: rgba(255,255,255,1);
 
-html {}
-
+// GLOBAL
 *, *:before, *:after {
   box-sizing: border-box;
 }
@@ -23,6 +22,7 @@ body {
   min-height: 100%;
 }
 
+// OVERLAY - Site title + desktop menu (above all other layers)
 #overlay {
   position: absolute;
   @media only screen and (max-width : 768px) {
@@ -84,11 +84,14 @@ body {
       }
     }
     @media only screen and (max-width : 768px) {
-      display: none;
+      // background-color: rgba(0,0,0,0.5);
+      // padding: 0;
+      // margin-left: 20px;
     }
   }
 }
 
+// CONTENT BOX - contains all text info (other than 'work' section)
 #content {
   position: absolute;
   top: 0;
@@ -103,45 +106,79 @@ body {
     justify-content: center;
     @media only screen and (max-width : 768px) {
       // align-items: flex-end;
-      margin-top: 50px;
+      // margin-top: 50px;
     }
     #contentBox {
       position: relative;
+      display: flex;
       min-height: 500px;
       min-width: 500px;
       padding: 20px;
       margin: 30px;
-      background-color: rgba(0,0,0,0.3);
+      background-color: rgba(0,0,0,0.5);
       border: 10px solid #fff;
       @media only screen and (max-width : 768px) {
         min-height: auto;
         min-width: auto;
         margin: 15px;
+        p {
+          font-size: .8em;
+        }
+      }
+      .subheading {
+        margin-top: 0px;
+      }
+
+      // CONTACT
+      #contactContainer {
+        display: flex;
+        flex-direction: column;
+        flex: 1 0 auto;
       }
       #contactBody {
-        margin-top: 30px;
+        display: flex;
+        flex: 1 0 auto;
         .text {
           display: inline-block;
           vertical-align: middle;
           font-size: 1.2em;
           font-weight: 200;
         }
-        .iconCentered {
-          display: inline-block;
-          vertical-align: middle;
-          margin-right: 20px;
-          min-width: 30px;
+        .half {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1em;
+          flex: 1 0 50%;
           text-align: center;
-          .fa {
-            font-size: 2.5em;
+          a {
+            margin-bottom: 35px;
           }
-          .fa-mobile {
-            font-size: 3em;
+          .left { font-size: 10em; }
+          .right {
+            font-size: 8em;
+            padding: 10px;
           }
-          .fa-paper-plane {
-            font-size: 2em;
+          #iconBox {
+            height: 150px;
+          }
+          @media only screen and (max-width : 768px) {
+            font-size: .6em;
+            margin-top: 10px;
+            a {
+              margin-bottom: 0;
+            }
+            .left { font-size: 7em; }
+            .right {
+              font-size: 5em;
+              padding: 10px;
+            }
+            #iconBox {
+              height: 70px;
+            }
           }
         }
+
       }
 
       h1 {
@@ -200,6 +237,11 @@ body {
       width: 100%;
       flex: 0 0 100%;
       background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+      @media only screen and (max-width : 768px) {
+        background-size: auto 70%;
+      }
       .detailsBox {
         background-color: rgba(0,0,0,0.2);
         position: absolute;
@@ -208,13 +250,31 @@ body {
         padding: 20px;
         max-width: 50%;
         margin: 0 auto;
-        margin-bottom: 50px;
+        margin-bottom: 40px;
+        cursor: pointer;
+        transition: all 0.5s ease;
+        p {
+          margin: 0;
+          font-size: .8em;
+        }
+        h2 {
+          margin-top: 0;
+          margin-bottom: 10px;
+        }
         @media only screen and (max-width : 768px) {
           margin-bottom: 0;
+          width: 100%;
           max-width: 100%;
+          min-width: 100%;
+          max-height: 200px;
+          overflow: auto;
+          // bottom: -100px;
+          h2 {
+            font-size: 1em;
+          }
           p {
             margin: 0;
-            font-size: 0.8em;
+            font-size: 0.7em;
           }
         }
       }
@@ -261,7 +321,9 @@ body {
         text-align: right;
       }
       @media only screen and (max-width : 768px) {
+        height: calc(100% - 60px);
         .arrow {
+          margin-top: 60px;
           font-size: 3em;
           opacity: 0.8;
         }
@@ -276,6 +338,7 @@ body {
   }
 }
 
+// MOBILE DRAWER MENU + BUTTON
 #menu-btn {
   position: absolute;
   top: 0;
@@ -285,9 +348,10 @@ body {
   font-size: 1.3em;
   cursor: pointer;
   background-color: rgba(0,0,0,0.2);
-  // border-bottom-left-radius: 20px;
+  @media only screen and (min-width : 768px) {
+    display: none;
+  }
 }
-
 #mobile-menu {
   position: absolute;
   padding: 20px;
@@ -295,7 +359,7 @@ body {
   left: -200px;
   height: 100%;
   background-color: rgba(0,0,0,0.9);
-  box-shadow: 0px 0px 10px 0px black;
+  box-shadow: 0px 0px 0px 0px black;
   transition: all 0.5s ease;
   ul {
     margin: 25px 0;
@@ -313,15 +377,20 @@ body {
   }
   &.open {
     left: 0px;
+    box-shadow: 0px 0px 10px 0px black;
   }
 }
 
+// BACKGROUND - Gradient and 3D Model
 #background {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  canvas {
+    width: 100%;
+  }
 
   // gradient (66% to right)
   background: $bkg-light;
@@ -347,4 +416,15 @@ body {
   #threeBlur {
     filter: blur(3px);
   }
+}
+
+// MISC
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
 }
