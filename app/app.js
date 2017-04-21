@@ -66,20 +66,27 @@ class Base extends React.Component {
           <div id="threeBlur">
             <div id="3dInject"></div>
           </div>
+          <div id="darken"></div>
         </div>
 
         <div id="content">
-          { this.props.location.pathname == '/work' || this.props.location.pathname == '/' ?
-            <ReactCSSTransitionGroup
-              transitionName="ourWork"
-              transitionAppear={true}
-              transitionAppearTimeout={500}
-              transitionEnterTimeout={500}
-              transitionLeaveTimeout={500}>
-              {this.props.children}
-            </ReactCSSTransitionGroup> :
-            <ContentBox pushChildren={this.props.children}/>
-          }
+          <div id='top'></div>
+          <div id='middle'>
+            <div id='left'></div>
+              { this.props.location.pathname == '/work' || this.props.location.pathname == '/' ?
+                <ReactCSSTransitionGroup
+                  transitionName="ourWork"
+                  transitionAppear={true}
+                  transitionAppearTimeout={500}
+                  transitionEnterTimeout={500}
+                  transitionLeaveTimeout={500}>
+                  {this.props.children}
+                </ReactCSSTransitionGroup> :
+                <ContentBox pushChildren={this.props.children}/>
+              }
+            <div id='right'></div>
+          </div>
+          <div id='bottom'></div>
         </div>
 
         <div id="overlay">
@@ -89,7 +96,7 @@ class Base extends React.Component {
                 JIST <span>Design</span>
               </h1>
             </Link>
-            <h2>Industrial Design // Electronics // Prototyping // Manufacturing</h2>
+            <h2><span>Industrial Design // Electronics // Prototyping // Manufacturing</span></h2>
           </div>
           <Menu pathName={this.props.location.pathname}/>
         </div>

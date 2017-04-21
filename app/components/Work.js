@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 import slideData from '../slideData';
 
 class Work extends React.Component {
@@ -103,16 +104,31 @@ class DetailsBox extends React.Component {
     }
   };
 
+  componentDidMount() {
+    if (ReactDOM.findDOMNode(this)) {
+      const height = ReactDOM.findDOMNode(this).offsetHeight;
+      this.setState({
+        height: height,
+        position: this.state.open ? 0 : 55 - height
+      });
+    }
+  }
+
   toggleOpen = () => {
     if (this.state.mobile) {
-      this.setState({ open: !this.state.open });
+      // get height of detailsBox
+      const height = ReactDOM.findDOMNode(this).offsetHeight;
+      this.setState({
+        open: !this.state.open,
+        position: this.state.open ? 55 - height : 0
+      });
     }
   };
 
   render() {
     if (this.props.description != '') {
       return (
-        <div className={'detailsBox noselect' + (this.props.open ? ' open' : '' )} 
+        <div style={{bottom: this.state.mobile ? this.state.position : 0}} className={'detailsBox noselect'}
           onClick={this.toggleOpen} >
           {this.props.title != '' ? <h2>{this.props.title}</h2> : null }
           <p>{this.props.description}</p>
