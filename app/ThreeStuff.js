@@ -7,6 +7,15 @@ var Inject3dModel = function() {
 	var scene = new THREE.Scene();
 	var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
 
+	var mouseX = 0;
+	var mouseY = 0;
+	var targetX = 0;
+	var targetY = 0;
+	var windowHalfX = window.innerWidth / 2;
+	var windowHalfY = window.innerHeight / 2;
+
+	var mobile = window.innerWidth > 768 ? false : true;
+
 	// attributes: field of view, aspect ratio, near clipping pane, far clipping pane
 	// var camera = new THREE.PerspectiveCamera( 75, document.getElementById('showcase').innerWidth() / document.getElementById('showcase').innerHeight(), 0.1, 1000 );
 
@@ -39,13 +48,36 @@ var Inject3dModel = function() {
   // This creates a loop that causes the renderer to draw the scene 60 times per second
 	var render = function () {
 	  requestAnimationFrame(render);
-	  model.rotation.x += 0.001;
-	  model.rotation.y += 0.001;
+		if (mobile) {
+			model.rotation.x += 0.001;
+			model.rotation.y += 0.001;
+		} else {
+			targetX = mouseX * .001;
+			targetY = mouseY * .001;
+			model.rotation.x += 0.05 * ( targetY - model.rotation.x );
+			model.rotation.y += 0.05 * ( targetX - model.rotation.y );
+		}
 	  renderer.render(scene, camera);
 	};
 
+	// function render() {
+	// 	targetX = mouseX * .001;
+	// 	targetY = mouseY * .001;
+	// 	if ( model ) {
+	// 		model.rotation.y += 0.05 * ( targetX - model.rotation.y );
+	// 		model.rotation.x += 0.05 * ( targetY - model.rotation.x );
+	// 	}
+	// 	renderer.render( scene, camera );
+	// }
+
+
+	// EVENTS
+
 	// Keep 3D model centered when window resizes
 	window.addEventListener( 'resize', onWindowResize, false );
+
+	// Mouse Movement
+	document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 
 	function onWindowResize() {
 		camera.aspect = window.innerWidth/window.innerHeight;
@@ -53,6 +85,12 @@ var Inject3dModel = function() {
 		renderer.setSize( document.getElementById('app').offsetWidth, window.innerHeight );
 		// console.log('width', document.getElementById('app').offsetWidth);
 	};
+
+	function onDocumentMouseMove( event ) {
+		mouseX = ( event.clientX - windowHalfX );
+		mouseY = ( event.clientY - windowHalfY );
+		// console.log(mouseX, mouseY);
+	}
 
 	render();
 }
