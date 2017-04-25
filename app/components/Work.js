@@ -13,6 +13,15 @@ class Work extends React.Component {
     }
   };
 
+  handleKeyDown = (event) => {
+    // console.log(event.key);
+    if(event.key == 'ArrowLeft'){
+      this.handlePrevious();
+    } else if (event.key == 'ArrowRight') {
+      this.handleNext();
+    }
+  };
+
   handleNext = () => {
     // if reached the end of the slideshow
     let nextPage;
@@ -46,7 +55,7 @@ class Work extends React.Component {
       viewerWidth: window.innerWidth,
       slidePosition: this.state.page * window.innerWidth
     });
-    console.log('width', window.innerWidth);
+    // console.log('width', window.innerWidth);
   }
 
   componentWillMount = () => {
@@ -55,10 +64,12 @@ class Work extends React.Component {
 
   componentDidMount = () => {
     window.addEventListener("resize", this.updateViewerWidth);
+    document.addEventListener("keydown", this.handleKeyDown.bind(this));
   }
 
   componentWillUnmount = () => {
     window.removeEventListener("resize", this.updateViewerWidth);
+    document.removeEventListener("keydown", this.handleKeyDown.bind(this));
   }
 
   render() {
