@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import slideData from '../slideData';
+import Swipeable from 'react-swipeable';
 
 class Work extends React.Component {
   constructor(props) {
@@ -55,7 +56,6 @@ class Work extends React.Component {
       viewerWidth: window.innerWidth,
       slidePosition: this.state.page * window.innerWidth
     });
-    // console.log('width', window.innerWidth);
   }
 
   componentWillMount = () => {
@@ -64,12 +64,12 @@ class Work extends React.Component {
 
   componentDidMount = () => {
     window.addEventListener("resize", this.updateViewerWidth);
-    document.addEventListener("keydown", this.handleKeyDown.bind(this));
+    document.addEventListener("keydown", this.handleKeyDown);
   }
 
   componentWillUnmount = () => {
     window.removeEventListener("resize", this.updateViewerWidth);
-    document.removeEventListener("keydown", this.handleKeyDown.bind(this));
+    document.removeEventListener("keydown", this.handleKeyDown);
   }
 
   render() {
@@ -85,14 +85,16 @@ class Work extends React.Component {
             {slides}
           </div>
         </div>
-        <div id="controls">
-          <div id="back" className="navButton" onClick={this.handlePrevious}>
-            <div id="arrowLeft" className="arrow"><i className="fa fa-chevron-left" aria-hidden="true"></i></div>
+        <Swipeable onSwipedRight={this.handlePrevious} onSwipedLeft={this.handleNext} style={{touchAction: 'none'}}>
+          <div id="controls">
+            <div id="back" className="navButton" onClick={this.handlePrevious}>
+              <div id="arrowLeft" className="arrow"><i className="fa fa-chevron-left" aria-hidden="true"></i></div>
+            </div>
+            <div id="next" className="navButton" onClick={this.handleNext}>
+              <div id="arrowRight" className="arrow"><i className="fa fa-chevron-right" aria-hidden="true"></i></div>
+            </div>
           </div>
-          <div id="next" className="navButton" onClick={this.handleNext}>
-            <div id="arrowRight" className="arrow"><i className="fa fa-chevron-right" aria-hidden="true"></i></div>
-          </div>
-        </div>
+        </Swipeable>
       </div>
     );
   }
