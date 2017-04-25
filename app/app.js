@@ -63,7 +63,7 @@ class Base extends React.Component {
       <div id="app-container">
 
         <div id="background">
-          <div id="threeBlur">
+          <div id="threeBlur" className={ window.innerWidth < 768 || this.props.location.pathname != '/' ? 'blur' : '' }>
             <div id="3dInject"></div>
           </div>
           <div id="darken"></div>

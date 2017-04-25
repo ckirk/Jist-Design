@@ -13,6 +13,9 @@ body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
   color: #fff;
+  ::selection {
+    background: rgb(43, 214, 199); /* WebKit/Blink Browsers */
+  }
   a {
     text-decoration: inherit;
     color: #fff;
@@ -446,7 +449,12 @@ body {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#aaaaaa', GradientType=1 );
   }
   #threeBlur {
-    filter: blur(3px);
+    filter: blur(1px);
+    transition: all 1s ease;
+    &.blur {
+      filter: blur(3px);
+      transition: all 1s ease;
+    }
   }
   #darken {
     background-color: rgba(0, 0, 0, 0.3);

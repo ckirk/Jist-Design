@@ -21657,23 +21657,32 @@
 	          { id: 'background' },
 	          _react2.default.createElement(
 	            'div',
-	            { id: 'threeBlur' },
+	            { id: 'threeBlur', className: window.innerWidth < 768 || this.props.location.pathname != '/' ? 'blur' : '' },
 	            _react2.default.createElement('div', { id: '3dInject' })
-	          )
+	          ),
+	          _react2.default.createElement('div', { id: 'darken' })
 	        ),
 	        _react2.default.createElement(
 	          'div',
 	          { id: 'content' },
-	          this.props.location.pathname == '/work' || this.props.location.pathname == '/' ? _react2.default.createElement(
-	            _reactAddonsCssTransitionGroup2.default,
-	            {
-	              transitionName: 'ourWork',
-	              transitionAppear: true,
-	              transitionAppearTimeout: 500,
-	              transitionEnterTimeout: 500,
-	              transitionLeaveTimeout: 500 },
-	            this.props.children
-	          ) : _react2.default.createElement(ContentBox, { pushChildren: this.props.children })
+	          _react2.default.createElement('div', { id: 'top' }),
+	          _react2.default.createElement(
+	            'div',
+	            { id: 'middle' },
+	            _react2.default.createElement('div', { id: 'left' }),
+	            this.props.location.pathname == '/work' || this.props.location.pathname == '/' ? _react2.default.createElement(
+	              _reactAddonsCssTransitionGroup2.default,
+	              {
+	                transitionName: 'ourWork',
+	                transitionAppear: true,
+	                transitionAppearTimeout: 500,
+	                transitionEnterTimeout: 500,
+	                transitionLeaveTimeout: 500 },
+	              this.props.children
+	            ) : _react2.default.createElement(ContentBox, { pushChildren: this.props.children }),
+	            _react2.default.createElement('div', { id: 'right' })
+	          ),
+	          _react2.default.createElement('div', { id: 'bottom' })
 	        ),
 	        _react2.default.createElement(
 	          'div',
@@ -21698,7 +21707,11 @@
 	            _react2.default.createElement(
 	              'h2',
 	              null,
-	              'Industrial Design // Electronics // Prototyping // Manufacturing'
+	              _react2.default.createElement(
+	                'span',
+	                null,
+	                'Industrial Design // Electronics // Prototyping // Manufacturing'
+	              )
 	            )
 	          ),
 	          _react2.default.createElement(_Menu2.default, { pathName: this.props.location.pathname })
@@ -29023,6 +29036,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactDom = __webpack_require__(32);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
 	var _slideData = __webpack_require__(250);
 
 	var _slideData2 = _interopRequireDefault(_slideData);
@@ -29171,7 +29188,12 @@
 
 	    _this2.toggleOpen = function () {
 	      if (_this2.state.mobile) {
-	        _this2.setState({ open: !_this2.state.open });
+	        // get height of detailsBox
+	        var height = _reactDom2.default.findDOMNode(_this2).offsetHeight;
+	        _this2.setState({
+	          open: !_this2.state.open,
+	          position: _this2.state.open ? 55 - height : 0
+	        });
 	      }
 	    };
 
@@ -29183,12 +29205,23 @@
 	  }
 
 	  _createClass(DetailsBox, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      if (_reactDom2.default.findDOMNode(this)) {
+	        var height = _reactDom2.default.findDOMNode(this).offsetHeight;
+	        this.setState({
+	          height: height,
+	          position: this.state.open ? 0 : 55 - height
+	        });
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      if (this.props.description != '') {
 	        return _react2.default.createElement(
 	          'div',
-	          { className: 'detailsBox noselect' + (this.props.open ? ' open' : ''),
+	          { style: { bottom: this.state.mobile ? this.state.position : 0 }, className: 'detailsBox noselect',
 	            onClick: this.toggleOpen },
 	          this.props.title != '' ? _react2.default.createElement(
 	            'h2',
@@ -29655,13 +29688,27 @@
 	var Inject3dModel = function Inject3dModel() {
 
 		var scene = new THREE.Scene();
+		// scene.fog = new THREE.FogExp2( 'white', .4 );
 		var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+		var mouseX = 0;
+		var mouseY = 0;
+		var targetX = 0;
+		var targetY = 0;
+		var windowHalfX = window.innerWidth / 2;
+		var windowHalfY = window.innerHeight / 2;
+		var baseRotation = 0;
+
+		var mobile = window.innerWidth > 768 ? false : true;
 
 		// attributes: field of view, aspect ratio, near clipping pane, far clipping pane
 		// var camera = new THREE.PerspectiveCamera( 75, document.getElementById('showcase').innerWidth() / document.getElementById('showcase').innerHeight(), 0.1, 1000 );
 
 		// var renderer = new THREE.WebGLRenderer();
-		var renderer = new THREE.WebGLRenderer({ alpha: true });
+		var renderer = new THREE.WebGLRenderer({
+			alpha: true,
+			antialias: true
+		});
 		renderer.setSize(window.innerWidth, window.innerHeight);
 		renderer.setClearColor(0x000000, 0); // the default (clear background)
 		document.getElementById("3dInject").appendChild(renderer.domElement);
@@ -29689,13 +29736,31 @@
 		// This creates a loop that causes the renderer to draw the scene 60 times per second
 		var render = function render() {
 			requestAnimationFrame(render);
-			model.rotation.x += 0.001;
-			model.rotation.y += 0.001;
+
+			var baseRotationSpeed = 0.00003; // 3 how much the model will drift without user input
+			var rotationRange = 0.002; // how much the model will move relative to mouse movmenents
+			var rotationEase = 0.03; // how long it takes to get there (bigger -> faster)
+
+			if (mobile) {
+				model.rotation.x += 0.001;
+				model.rotation.y += 0.001;
+			} else {
+				targetX = mouseX * .002;
+				targetY = mouseY * .002;
+				model.rotation.x += rotationEase * (targetY - model.rotation.x);
+				model.rotation.y += baseRotation + rotationEase * (targetX - model.rotation.y);
+				baseRotation += baseRotationSpeed;
+			}
 			renderer.render(scene, camera);
 		};
 
+		// EVENTS
+
 		// Keep 3D model centered when window resizes
 		window.addEventListener('resize', onWindowResize, false);
+
+		// Mouse Movement
+		document.addEventListener('mousemove', onDocumentMouseMove, false);
 
 		function onWindowResize() {
 			camera.aspect = window.innerWidth / window.innerHeight;
@@ -29703,6 +29768,12 @@
 			renderer.setSize(document.getElementById('app').offsetWidth, window.innerHeight);
 			// console.log('width', document.getElementById('app').offsetWidth);
 		};
+
+		function onDocumentMouseMove(event) {
+			mouseX = event.clientX - windowHalfX;
+			mouseY = event.clientY - windowHalfY;
+			// console.log(mouseX, mouseY);
+		}
 
 		render();
 	};
@@ -82729,7 +82800,7 @@
 	exports.push([module.id, "@import url(https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900);", ""]);
 
 	// module
-	exports.push([module.id, "*, *:before, *:after {\n  box-sizing: border-box; }\n\nbody {\n  margin: 0;\n  font-family: 'Roboto', sans-serif;\n  color: #fff; }\n  body a {\n    text-decoration: inherit;\n    color: #fff; }\n\n#app, #app-container {\n  min-height: 100%; }\n\n#overlay {\n  position: absolute; }\n  @media only screen and (max-width: 768px) {\n    #overlay {\n      width: 100%; } }\n  #overlay #header {\n    flex: 0 0 auto;\n    padding: 30px;\n    z-index: 2; }\n    #overlay #header h1 {\n      font-size: 4em;\n      font-weight: 600;\n      margin: 0; }\n    #overlay #header span {\n      font-weight: 100; }\n    #overlay #header h2 {\n      font-size: 1.2em;\n      font-weight: 100;\n      margin: 0;\n      margin-top: 5px; }\n    @media only screen and (max-width: 768px) {\n      #overlay #header {\n        padding: 15px;\n        padding-top: 10px; }\n        #overlay #header h1 {\n          font-size: 3em; }\n        #overlay #header h2 {\n          font-size: 0.9em; }\n        #overlay #header #menu-btn {\n          display: inline-block; } }\n  #overlay #menu {\n    flex: 0 0 auto;\n    width: 300px;\n    padding-left: 30px; }\n    #overlay #menu ul {\n      margin: 25px 0;\n      list-style-type: none;\n      padding: 0;\n      font-size: 1.6em;\n      font-weight: 100; }\n      #overlay #menu ul li {\n        cursor: pointer;\n        padding: 5px 10px; }\n        #overlay #menu ul li:hover {\n          background-color: #fff;\n          opacity: 0.8;\n          color: #727272;\n          font-weight: 300; }\n      #overlay #menu ul a.active li {\n        border-left: 5px solid #fff; }\n\n#content {\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0; }\n  #content #contentBoxContainer {\n    height: 100%;\n    width: 100%;\n    display: flex;\n    align-items: center;\n    justify-content: center; }\n    #content #contentBoxContainer #contentBox {\n      position: relative;\n      display: flex;\n      min-height: 500px;\n      min-width: 500px;\n      padding: 20px;\n      margin: 30px;\n      background-color: rgba(0, 0, 0, 0.5);\n      border: 10px solid #fff; }\n      @media only screen and (max-width: 768px) {\n        #content #contentBoxContainer #contentBox {\n          min-height: auto;\n          min-width: auto;\n          margin: 15px; }\n          #content #contentBoxContainer #contentBox p {\n            font-size: .8em; } }\n      #content #contentBoxContainer #contentBox .subheading {\n        margin-top: 0px; }\n      #content #contentBoxContainer #contentBox #contactContainer {\n        display: flex;\n        flex-direction: column;\n        flex: 1 0 auto; }\n      #content #contentBoxContainer #contentBox #contactBody {\n        display: flex;\n        flex: 1 0 auto; }\n        #content #contentBoxContainer #contentBox #contactBody .text {\n          display: inline-block;\n          vertical-align: middle;\n          font-size: 1.2em;\n          font-weight: 200; }\n        #content #contentBoxContainer #contentBox #contactBody .half {\n          display: flex;\n          align-items: center;\n          justify-content: center;\n          font-size: 1em;\n          flex: 1 0 50%;\n          text-align: center; }\n          #content #contentBoxContainer #contentBox #contactBody .half a {\n            margin-bottom: 35px; }\n          #content #contentBoxContainer #contentBox #contactBody .half .left {\n            font-size: 10em; }\n          #content #contentBoxContainer #contentBox #contactBody .half .right {\n            font-size: 8em;\n            padding: 10px; }\n          #content #contentBoxContainer #contentBox #contactBody .half #iconBox {\n            height: 150px; }\n          @media only screen and (max-width: 768px) {\n            #content #contentBoxContainer #contentBox #contactBody .half {\n              font-size: .6em;\n              margin-top: 10px; }\n              #content #contentBoxContainer #contentBox #contactBody .half a {\n                margin-bottom: 0; }\n              #content #contentBoxContainer #contentBox #contactBody .half .left {\n                font-size: 7em; }\n              #content #contentBoxContainer #contentBox #contactBody .half .right {\n                font-size: 5em;\n                padding: 10px; }\n              #content #contentBoxContainer #contentBox #contactBody .half #iconBox {\n                height: 70px; } }\n      #content #contentBoxContainer #contentBox h1 {\n        margin: 0;\n        font-size: 3em; }\n  #content .ourWork-leave {\n    opacity: 1; }\n    #content .ourWork-leave.ourWork-leave-active {\n      opacity: 0; }\n  #content #ourWork {\n    position: absolute;\n    top: 0;\n    bottom: 0;\n    left: 0;\n    right: 0;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    transition: all 0.5s ease;\n    overflow: hidden; }\n    #content #ourWork.ourWork-appear {\n      opacity: 0; }\n      #content #ourWork.ourWork-appear.ourWork-appear-active {\n        opacity: 1; }\n    #content #ourWork #viewer {\n      height: 100%;\n      width: 100%;\n      background: white;\n      background: -moz-radial-gradient(50% 50%, ellipse cover, white 0%, #323232 100%);\n      background: -webkit-gradient(radial, 50% 50%, 0px, center center, 100%, color-stop(0%, white), color-stop(100%, #323232));\n      background: -webkit-radial-gradient(50% 50%, ellipse cover, white 0%, #323232 100%);\n      background: -o-radial-gradient(50% 50%, ellipse cover, white 0%, #323232 100%);\n      background: -ms-radial-gradient(50% 50%, ellipse cover, white 0%, #323232 100%);\n      background: radial-gradient(ellipse at 50% 50%, white 0%, #323232 100%);\n      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#aaaaaa', GradientType=1 ); }\n      #content #ourWork #viewer #slideWrapper {\n        display: flex;\n        transition: all .5s ease; }\n    #content #ourWork .slide {\n      position: relative;\n      height: 100%;\n      width: 100%;\n      flex: 0 0 100%;\n      background-size: cover;\n      background-repeat: no-repeat;\n      background-position: center center; }\n      @media only screen and (max-width: 768px) {\n        #content #ourWork .slide {\n          background-size: auto 70%; } }\n      #content #ourWork .slide .detailsBox {\n        background-color: rgba(0, 0, 0, 0.2);\n        position: absolute;\n        bottom: 0;\n        right: 0;\n        padding: 20px;\n        max-width: 50%;\n        margin: 0 auto;\n        margin-bottom: 40px;\n        cursor: pointer;\n        transition: all 0.5s ease; }\n        #content #ourWork .slide .detailsBox p {\n          margin: 0;\n          font-size: .8em; }\n        #content #ourWork .slide .detailsBox h2 {\n          margin-top: 0;\n          margin-bottom: 10px; }\n        @media only screen and (max-width: 768px) {\n          #content #ourWork .slide .detailsBox {\n            margin-bottom: 0;\n            width: 100%;\n            max-width: 100%;\n            min-width: 100%;\n            max-height: 200px;\n            overflow: auto; }\n            #content #ourWork .slide .detailsBox h2 {\n              font-size: 1em; }\n            #content #ourWork .slide .detailsBox p {\n              margin: 0;\n              font-size: 0.7em; } }\n    #content #ourWork #controls {\n      position: absolute;\n      top: 0;\n      left: 0;\n      height: 100%;\n      width: 100%;\n      display: flex; }\n      #content #ourWork #controls .navButton {\n        flex: 0 0 50%;\n        cursor: pointer;\n        position: relative;\n        display: flex;\n        align-items: center; }\n        #content #ourWork #controls .navButton:hover .arrow {\n          opacity: 0.8;\n          transition: all 0.5s ease; }\n        #content #ourWork #controls .navButton:hover #arrowLeft {\n          transform: translateX(-10px); }\n        #content #ourWork #controls .navButton:hover #arrowRight {\n          transform: translateX(10px); }\n      #content #ourWork #controls .arrow {\n        font-size: 5em;\n        opacity: 0.2;\n        cursor: pointer;\n        flex: 1 0 auto;\n        transition: all 0.5s ease;\n        text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); }\n      #content #ourWork #controls #arrowLeft {\n        margin-left: 30px; }\n      #content #ourWork #controls #arrowRight {\n        margin-right: 30px;\n        text-align: right; }\n      @media only screen and (max-width: 768px) {\n        #content #ourWork #controls {\n          height: calc(100% - 60px); }\n          #content #ourWork #controls .arrow {\n            margin-top: 60px;\n            font-size: 3em;\n            opacity: 0.8; }\n          #content #ourWork #controls #arrowLeft {\n            margin-left: 10px; }\n          #content #ourWork #controls #arrowRight {\n            margin-right: 10px; } }\n\n#menu-btn {\n  position: absolute;\n  top: 0;\n  right: 0;\n  padding: 14px;\n  margin: 10px;\n  font-size: 1.3em;\n  cursor: pointer;\n  background-color: rgba(0, 0, 0, 0.2); }\n  @media only screen and (min-width: 768px) {\n    #menu-btn {\n      display: none; } }\n\n#mobile-menu {\n  position: absolute;\n  padding: 20px;\n  top: 0;\n  left: -200px;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.9);\n  box-shadow: 0px 0px 0px 0px black;\n  transition: all 0.5s ease; }\n  #mobile-menu ul {\n    margin: 25px 0;\n    list-style-type: none;\n    padding: 0;\n    font-size: 1.6em;\n    font-weight: 100; }\n    #mobile-menu ul li {\n      cursor: pointer;\n      padding: 5px 10px; }\n    #mobile-menu ul a.active li {\n      border-left: 5px solid #fff; }\n  #mobile-menu.open {\n    left: 0px;\n    box-shadow: 0px 0px 10px 0px black; }\n\n#background {\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background: white;\n  background: -moz-radial-gradient(50% 50%, ellipse cover, white 0%, #323232 100%);\n  background: -webkit-gradient(radial, 50% 50%, 0px, center center, 100%, color-stop(0%, white), color-stop(100%, #323232));\n  background: -webkit-radial-gradient(50% 50%, ellipse cover, white 0%, #323232 100%);\n  background: -o-radial-gradient(50% 50%, ellipse cover, white 0%, #323232 100%);\n  background: -ms-radial-gradient(50% 50%, ellipse cover, white 0%, #323232 100%);\n  background: radial-gradient(ellipse at 50% 50%, white 0%, #323232 100%);\n  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#aaaaaa', GradientType=1 ); }\n  #background canvas {\n    width: 100%; }\n  @media only screen and (max-width: 768px) {\n    #background {\n      background: white;\n      background: -moz-radial-gradient(center, ellipse cover, white 0%, #323232 100%);\n      background: -webkit-gradient(radial, center, 0px, center center, 100%, color-stop(0%, white), color-stop(100%, #323232));\n      background: -webkit-radial-gradient(center, ellipse cover, white 0%, #323232 100%);\n      background: -o-radial-gradient(center, ellipse cover, white 0%, #323232 100%);\n      background: -ms-radial-gradient(center, ellipse cover, white 0%, #323232 100%);\n      background: radial-gradient(ellipse at center, white 0%, #323232 100%);\n      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#aaaaaa', GradientType=1 ); } }\n  #background #threeBlur {\n    filter: blur(3px); }\n\n.noselect {\n  -webkit-touch-callout: none;\n  /* iOS Safari */\n  -webkit-user-select: none;\n  /* Safari */\n  -khtml-user-select: none;\n  /* Konqueror HTML */\n  -moz-user-select: none;\n  /* Firefox */\n  -ms-user-select: none;\n  /* Internet Explorer/Edge */\n  user-select: none;\n  /* Non-prefixed version, currently\n                                  supported by Chrome and Opera */ }\n", ""]);
+	exports.push([module.id, "*, *:before, *:after {\n  box-sizing: border-box; }\n\nbody {\n  margin: 0;\n  font-family: 'Roboto', sans-serif;\n  color: #fff; }\n  body ::selection {\n    background: #2bd6c7;\n    /* WebKit/Blink Browsers */ }\n  body a {\n    text-decoration: inherit;\n    color: #fff; }\n\n#app, #app-container {\n  min-height: 100%; }\n\n#overlay {\n  position: absolute; }\n  @media only screen and (max-width: 768px) {\n    #overlay {\n      width: 100%; } }\n  #overlay #header {\n    flex: 0 0 auto;\n    padding: 30px;\n    z-index: 2; }\n    #overlay #header h1 {\n      font-size: 4em;\n      font-weight: 600;\n      margin: 0; }\n    #overlay #header span {\n      font-weight: 100; }\n    #overlay #header h2 {\n      font-size: 1.2em;\n      font-weight: 100;\n      margin: 0;\n      margin-top: 5px; }\n    @media only screen and (max-width: 768px) {\n      #overlay #header {\n        padding: 15px;\n        padding-top: 10px; }\n        #overlay #header h1 {\n          font-size: 3em; }\n        #overlay #header h2 {\n          font-size: 0.9em; }\n        #overlay #header #menu-btn {\n          display: inline-block; } }\n  #overlay #menu {\n    flex: 0 0 auto;\n    width: 300px;\n    padding-left: 30px; }\n    #overlay #menu ul {\n      margin: 25px 0;\n      list-style-type: none;\n      padding: 0;\n      font-size: 1.6em;\n      font-weight: 100; }\n      #overlay #menu ul li {\n        cursor: pointer;\n        padding: 5px 10px; }\n        #overlay #menu ul li:hover {\n          background-color: #fff;\n          opacity: 0.8;\n          color: #727272;\n          font-weight: 300; }\n      #overlay #menu ul a.active li {\n        border-left: 5px solid #fff; }\n    @media only screen and (max-width: 768px) {\n      #overlay #menu {\n        background-color: rgba(0, 0, 0, 0.5);\n        margin-left: 15px;\n        margin-right: 15px;\n        width: 60%;\n        padding: 0; }\n        #overlay #menu ul {\n          padding: 10px; } }\n\n#content {\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  flex-direction: column; }\n  #content #top, #content #bottom {\n    flex: 0 0 150px; }\n  #content #middle {\n    display: flex;\n    flex: 1 0 auto; }\n    #content #middle #left, #content #middle #right {\n      flex: 0 0 200px; }\n  @media only screen and (max-width: 768px) {\n    #content #top, #content #bottom {\n      display: none; }\n    #content #left, #content #right {\n      display: none; } }\n  #content #contentBoxContainer {\n    flex: 1 0 auto;\n    display: flex;\n    align-items: center;\n    justify-content: center; }\n    #content #contentBoxContainer #contentBox {\n      position: relative;\n      display: flex;\n      max-height: 600px;\n      overflow: auto;\n      padding: 20px;\n      background-color: rgba(0, 0, 0, 0.5);\n      border: 10px solid #fff; }\n      @media only screen and (max-width: 768px) {\n        #content #contentBoxContainer #contentBox {\n          margin: 0;\n          border: none;\n          font-size: .5em; }\n          #content #contentBoxContainer #contentBox h1 {\n            font-size: .1em; }\n          #content #contentBoxContainer #contentBox p {\n            font-size: .6em; } }\n      #content #contentBoxContainer #contentBox .subheading {\n        margin-top: 0px; }\n      #content #contentBoxContainer #contentBox #contactContainer {\n        display: flex;\n        flex-direction: column;\n        flex: 1 0 auto;\n        min-width: 350px; }\n        @media only screen and (max-width: 768px) {\n          #content #contentBoxContainer #contentBox #contactContainer {\n            min-width: 0; } }\n      #content #contentBoxContainer #contentBox #contactBody {\n        display: flex;\n        flex: 1 0 auto; }\n        #content #contentBoxContainer #contentBox #contactBody .text {\n          display: inline-block;\n          vertical-align: middle;\n          font-size: 1.2em;\n          font-weight: 200; }\n        #content #contentBoxContainer #contentBox #contactBody .half {\n          display: flex;\n          align-items: center;\n          justify-content: center;\n          font-size: 1em;\n          flex: 1 0 50%;\n          text-align: center; }\n          #content #contentBoxContainer #contentBox #contactBody .half a {\n            margin-bottom: 35px; }\n          #content #contentBoxContainer #contentBox #contactBody .half .left {\n            font-size: 10em; }\n          #content #contentBoxContainer #contentBox #contactBody .half .right {\n            font-size: 8em;\n            padding: 10px; }\n          #content #contentBoxContainer #contentBox #contactBody .half #iconBox {\n            height: 150px; }\n          @media only screen and (max-width: 768px) {\n            #content #contentBoxContainer #contentBox #contactBody .half {\n              font-size: .6em;\n              margin-top: 10px; }\n              #content #contentBoxContainer #contentBox #contactBody .half a {\n                margin-bottom: 0; }\n              #content #contentBoxContainer #contentBox #contactBody .half .left {\n                font-size: 7em; }\n              #content #contentBoxContainer #contentBox #contactBody .half .right {\n                font-size: 5em;\n                padding: 10px; }\n              #content #contentBoxContainer #contentBox #contactBody .half #iconBox {\n                height: 70px; } }\n      #content #contentBoxContainer #contentBox h1 {\n        margin: 0;\n        font-size: 3em; }\n  #content .ourWork-leave {\n    opacity: 1; }\n    #content .ourWork-leave.ourWork-leave-active {\n      opacity: 0; }\n  #content #ourWork {\n    position: absolute;\n    top: 0;\n    bottom: 0;\n    left: 0;\n    right: 0;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    transition: all 0.5s ease;\n    overflow: hidden; }\n    #content #ourWork.ourWork-appear {\n      opacity: 0; }\n      #content #ourWork.ourWork-appear.ourWork-appear-active {\n        opacity: 1; }\n    #content #ourWork #viewer {\n      height: 100%;\n      width: 100%;\n      background: white;\n      background: -moz-radial-gradient(50% 50%, ellipse cover, white 0%, #323232 100%);\n      background: -webkit-gradient(radial, 50% 50%, 0px, center center, 100%, color-stop(0%, white), color-stop(100%, #323232));\n      background: -webkit-radial-gradient(50% 50%, ellipse cover, white 0%, #323232 100%);\n      background: -o-radial-gradient(50% 50%, ellipse cover, white 0%, #323232 100%);\n      background: -ms-radial-gradient(50% 50%, ellipse cover, white 0%, #323232 100%);\n      background: radial-gradient(ellipse at 50% 50%, white 0%, #323232 100%);\n      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#aaaaaa', GradientType=1 ); }\n      #content #ourWork #viewer #slideWrapper {\n        display: flex;\n        transition: all .5s ease; }\n    #content #ourWork .slide {\n      position: relative;\n      height: 100%;\n      width: 100%;\n      flex: 0 0 100%;\n      background-size: cover;\n      background-repeat: no-repeat;\n      background-position: center center; }\n      @media only screen and (max-width: 768px) {\n        #content #ourWork .slide {\n          background-size: auto 70%; } }\n      #content #ourWork .slide .detailsBox {\n        background-color: rgba(0, 0, 0, 0.2);\n        position: absolute;\n        bottom: 0;\n        right: 0;\n        padding: 20px;\n        max-width: 50%;\n        margin: 0 auto;\n        margin-bottom: 40px;\n        cursor: pointer;\n        transition: all 0.5s ease; }\n        #content #ourWork .slide .detailsBox.open {\n          bottom: -100px; }\n        #content #ourWork .slide .detailsBox p {\n          margin: 0;\n          font-size: .8em; }\n        #content #ourWork .slide .detailsBox h2 {\n          margin-top: 0;\n          margin-bottom: 15px; }\n        @media only screen and (max-width: 768px) {\n          #content #ourWork .slide .detailsBox {\n            margin-bottom: 0;\n            width: 100%;\n            max-width: 100%;\n            min-width: 100%;\n            max-height: 200px;\n            overflow: auto; }\n            #content #ourWork .slide .detailsBox h2 {\n              font-size: 1em; }\n            #content #ourWork .slide .detailsBox p {\n              margin: 0;\n              font-size: 0.7em; } }\n    #content #ourWork #controls {\n      position: absolute;\n      top: 0;\n      left: 0;\n      height: 100%;\n      width: 100%;\n      display: flex; }\n      #content #ourWork #controls .navButton {\n        flex: 0 0 50%;\n        cursor: pointer;\n        position: relative;\n        display: flex;\n        align-items: center; }\n        #content #ourWork #controls .navButton:hover .arrow {\n          opacity: 0.8;\n          transition: all 0.5s ease; }\n        #content #ourWork #controls .navButton:hover #arrowLeft {\n          transform: translateX(-10px); }\n        #content #ourWork #controls .navButton:hover #arrowRight {\n          transform: translateX(10px); }\n      #content #ourWork #controls .arrow {\n        font-size: 5em;\n        opacity: 0.2;\n        cursor: pointer;\n        flex: 1 0 auto;\n        transition: all 0.5s ease;\n        text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); }\n      #content #ourWork #controls #arrowLeft {\n        margin-left: 30px; }\n      #content #ourWork #controls #arrowRight {\n        margin-right: 30px;\n        text-align: right; }\n      @media only screen and (max-width: 768px) {\n        #content #ourWork #controls {\n          height: calc(100% - 60px); }\n          #content #ourWork #controls .arrow {\n            margin-top: 60px;\n            font-size: 3em;\n            opacity: 0.8; }\n          #content #ourWork #controls #arrowLeft {\n            margin-left: 10px; }\n          #content #ourWork #controls #arrowRight {\n            margin-right: 10px; } }\n\n#menu-btn {\n  position: absolute;\n  top: 0;\n  right: 0;\n  padding: 14px;\n  margin: 10px;\n  font-size: 1.3em;\n  cursor: pointer;\n  background-color: rgba(0, 0, 0, 0.2); }\n  @media only screen and (min-width: 768px) {\n    #menu-btn {\n      display: none; } }\n\n#mobile-menu {\n  position: absolute;\n  padding: 20px;\n  top: 0;\n  left: -200px;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.9);\n  box-shadow: 0px 0px 0px 0px black;\n  transition: all 0.5s ease; }\n  #mobile-menu ul {\n    margin: 25px 0;\n    list-style-type: none;\n    padding: 0;\n    font-size: 1.6em;\n    font-weight: 100; }\n    #mobile-menu ul li {\n      cursor: pointer;\n      padding: 5px 10px; }\n    #mobile-menu ul a.active li {\n      border-left: 5px solid #fff; }\n  #mobile-menu.open {\n    left: 0px;\n    box-shadow: 0px 0px 10px 0px black; }\n\n#background {\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background: white;\n  background: -moz-radial-gradient(50% 50%, ellipse cover, white 0%, #323232 100%);\n  background: -webkit-gradient(radial, 50% 50%, 0px, center center, 100%, color-stop(0%, white), color-stop(100%, #323232));\n  background: -webkit-radial-gradient(50% 50%, ellipse cover, white 0%, #323232 100%);\n  background: -o-radial-gradient(50% 50%, ellipse cover, white 0%, #323232 100%);\n  background: -ms-radial-gradient(50% 50%, ellipse cover, white 0%, #323232 100%);\n  background: radial-gradient(ellipse at 50% 50%, white 0%, #323232 100%);\n  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#aaaaaa', GradientType=1 ); }\n  #background canvas {\n    width: 100%; }\n  @media only screen and (max-width: 768px) {\n    #background {\n      background: white;\n      background: -moz-radial-gradient(center, ellipse cover, white 0%, #323232 100%);\n      background: -webkit-gradient(radial, center, 0px, center center, 100%, color-stop(0%, white), color-stop(100%, #323232));\n      background: -webkit-radial-gradient(center, ellipse cover, white 0%, #323232 100%);\n      background: -o-radial-gradient(center, ellipse cover, white 0%, #323232 100%);\n      background: -ms-radial-gradient(center, ellipse cover, white 0%, #323232 100%);\n      background: radial-gradient(ellipse at center, white 0%, #323232 100%);\n      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#aaaaaa', GradientType=1 ); } }\n  #background #threeBlur {\n    filter: blur(1px);\n    transition: all 1s ease; }\n    #background #threeBlur.blur {\n      filter: blur(3px);\n      transition: all 1s ease; }\n  #background #darken {\n    background-color: rgba(0, 0, 0, 0.3);\n    position: absolute;\n    position: absolute;\n    top: 0;\n    bottom: 0;\n    left: 0;\n    right: 0;\n    display: none; }\n    @media only screen and (max-width: 768px) {\n      #background #darken {\n        display: block; } }\n\n.noselect {\n  -webkit-touch-callout: none;\n  /* iOS Safari */\n  -webkit-user-select: none;\n  /* Safari */\n  -khtml-user-select: none;\n  /* Konqueror HTML */\n  -moz-user-select: none;\n  /* Firefox */\n  -ms-user-select: none;\n  /* Internet Explorer/Edge */\n  user-select: none;\n  /* Non-prefixed version, currently\n                                  supported by Chrome and Opera */ }\n", ""]);
 
 	// exports
 
