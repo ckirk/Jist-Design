@@ -70,7 +70,7 @@ class Base extends React.Component {
         </div>
 
         <div id="content">
-          <div id='top'></div>
+          <div id='top' className={this.props.location.pathname == '/process' ? 'process' : ''}></div>
           <div id='middle'>
             <div id='left'></div>
               { this.props.location.pathname == '/work' || this.props.location.pathname == '/' ?

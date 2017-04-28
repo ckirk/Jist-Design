@@ -17,7 +17,7 @@
   }
   #middle {
     display: flex;
-    flex: 1 0 auto;
+    flex: 1 1 auto;
     #left, #right {
       flex: 0 0 200px;
     }
@@ -25,13 +25,18 @@
   @media only screen and (max-width : 768px) {
     #top, #bottom {
       display: none;
+      &.process {
+        display: flex;
+        background-color: rgba(0,0,0,0.7);
+        flex: 0 0 120px;
+      }
     }
     #left, #right {
       display: none;
     }
   }
   #contentBoxContainer {
-    flex: 1 0 auto;
+    flex: 1 1 auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -39,17 +44,21 @@
       align-items: inherit;
       #contentBox {
         max-height: none;
+        padding: 80px;
+        margin: 40px;
+        overflow: auto;
+        margin-bottom: 0;
+        @media only screen and (max-width : 768px) {
+          margin: 0;
+          padding: 20px;
+        }
       }
-    }
-    @media only screen and (max-width : 768px) {
-      // align-items: flex-end;
-      // margin-top: 50px;
     }
     #contentBox {
       position: relative;
       display: flex;
       max-height: 600px;
-      padding: 20px;
+      padding: 20px 24px;
       background-color: rgba(0,0,0,0.5);
       // border: 10px solid #fff;
       @media only screen and (max-width : 768px) {
@@ -68,31 +77,50 @@
       }
 
       #process {
-        padding: 20px;
-        min-width: 600px;
+        // min-width: 600px;
         .icon {
           display: inline-block;
           font-size: 50px;
           width: 50px;
           margin-right: 20px;
           text-align: center;
+          vertical-align: middle;
+          .fa-cubes {
+            font-size: 38px;
+          }
         }
         h2 {
           font-size: 3em;
           margin: 0;
           display: inline-block;
+          vertical-align: middle;
         }
         .details {
           margin-top: 20px;
           margin-bottom: 20px;
           margin-left: 22px;
           border-left: white dotted 4px;
+          &:last-child {
+            border: none;
+          }
           ul {
             margin: 10px 0;
             padding-top: 0px;
             padding-bottom: 20px;
             padding-left: 80px;
             font-size: .9em;
+            li {
+              padding-bottom: 8px;
+            }
+          }
+        }
+        @media only screen and (max-width : 768px) {
+          h2 {
+            font-size: 4em;
+          }
+          .details ul {
+            padding-left: 60px;
+            font-size: 1.2em;
           }
         }
       }

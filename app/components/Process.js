@@ -29,7 +29,7 @@ const Process = (props) => {
       </div>
 
       <div className='icon'>
-        <i className="fa fa-magic" aria-hidden="true"></i>
+        <i className="fa fa-laptop" aria-hidden="true"></i>
       </div>
         <h2>Design</h2>
       <div className='details'>
@@ -53,7 +53,7 @@ const Process = (props) => {
       </div>
 
       <div className='icon'>
-        <i className="fa fa-cog" aria-hidden="true"></i>
+        <i className="fa fa-wrench" aria-hidden="true"></i>
       </div>
         <h2>Testing</h2>
       <div className='details'>
