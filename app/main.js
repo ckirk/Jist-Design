@@ -6,6 +6,6 @@ import App from './app';
 
 // Style Import
 import 'font-awesome/css/font-awesome.css';
-import './global.scss';
+import './styles/global.scss';
 
 ReactDOM.render(<App />, document.getElementById('app'))

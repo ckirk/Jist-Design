@@ -1,0 +1,156 @@
+@import 'variables.scss';
+
+#content {
+  #ourWork {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s ease;
+    overflow: hidden;
+    &.ourWork-appear {
+      opacity: 0;
+      &.ourWork-appear-active {
+        opacity: 1;
+      }
+    }
+    #viewer {
+      height: 100%;
+      width: 100%;
+      // border: 10px solid #fff;
+      // overflow: hidden;
+
+      // gradient (66% to right)
+      background: $bkg-light;
+      background: -moz-radial-gradient(50% 50%, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+      background: -webkit-gradient(radial, 50% 50%, 0px, center center, 100%, color-stop(0%, $bkg-light), color-stop(100%, $bkg-dark));
+      background: -webkit-radial-gradient(50% 50%, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+      background: -o-radial-gradient(50% 50%, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+      background: -ms-radial-gradient(50% 50%, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+      background: radial-gradient(ellipse at 50% 50%, $bkg-light 0%, $bkg-dark 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#aaaaaa', GradientType=1 );
+
+      #slideWrapper {
+        display: flex;
+        transition: all .5s ease;
+      }
+    }
+    .slide {
+      position: relative;
+      height: 100%;
+      width: 100%;
+      flex: 0 0 100%;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+      @media only screen and (max-width : 768px) {
+        background-size: auto 70%;
+      }
+      .detailsBox {
+        background-color: rgba(0,0,0,0.2);
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        padding: 20px;
+        max-width: 50%;
+        margin: 0 auto;
+        margin-bottom: 40px;
+        cursor: pointer;
+        transition: all 0.5s ease;
+        &.open {
+          bottom: -100px;
+        }
+        p {
+          margin: 0;
+          font-size: .8em;
+        }
+        h2 {
+          margin-top: 0;
+          margin-bottom: 15px;
+        }
+        @media only screen and (max-width : 768px) {
+          margin-bottom: 0;
+          width: 100%;
+          max-width: 100%;
+          min-width: 100%;
+          max-height: 200px;
+          overflow: auto;
+          // bottom: -100px;
+          h2 {
+            font-size: 1em;
+          }
+          p {
+            margin: 0;
+            font-size: 0.7em;
+          }
+        }
+      }
+    }
+    #controls {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      .navButton {
+        flex: 0 0 50%;
+        cursor: pointer;
+        position: relative;
+        display: flex;
+        align-items: center;
+        &:hover {
+          .arrow {
+            opacity: 0.8;
+            transition: all 0.5s ease;
+          }
+          #arrowLeft {
+            transform: translateX(-10px);
+          }
+          #arrowRight {
+            transform: translateX(10px);
+          }
+        }
+      }
+      .arrow {
+        font-size: 5em;
+        opacity: 0.2;
+        cursor: pointer;
+        flex: 1 0 auto;
+        transition: all 0.5s ease;
+        text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      }
+      #arrowLeft {
+        margin-left: 30px;
+      }
+      #arrowRight {
+        margin-right: 30px;
+        text-align: right;
+      }
+      @media only screen and (max-width : 768px) {
+        height: calc(100% - 60px);
+        .arrow {
+          margin-top: 60px;
+          font-size: 3em;
+          opacity: 0.8;
+        }
+        #arrowLeft {
+          margin-left: 10px;
+        }
+        #arrowRight {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+  .ourWork-leave {
+    opacity: 1;
+    &.ourWork-leave-active {
+      opacity: 0;
+    }
+  }
+}

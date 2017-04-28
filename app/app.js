@@ -41,7 +41,7 @@ class App extends Component {
 }
 
 const ContentBox = (props) => (
-  <div id="contentBoxContainer" >
+  <div id="contentBoxContainer" className={ props.location == '/process' ? 'process' : '' }>
     <div id="contentBox">
       {props.pushChildren}
     </div>
@@ -82,11 +82,11 @@ class Base extends React.Component {
                   transitionLeaveTimeout={500}>
                   {this.props.children}
                 </ReactCSSTransitionGroup> :
-                <ContentBox pushChildren={this.props.children}/>
+                <ContentBox pushChildren={this.props.children} location={this.props.location.pathname}/>
               }
             <div id='right'></div>
           </div>
-          <div id='bottom'></div>
+          <div id='bottom' className={ this.props.location.pathname == '/process' ? 'hide' : '' }></div>
         </div>
 
         <div id="overlay">

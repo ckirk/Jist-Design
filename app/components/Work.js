@@ -80,11 +80,13 @@ class Work extends React.Component {
 
     return (
       <div id="ourWork">
+
         <div id="viewer">
           <div id="slideWrapper" style={{transform: `translateX(-${this.state.slidePosition}px)`}}>
             {slides}
           </div>
         </div>
+
         <Swipeable onSwipedRight={this.handlePrevious} onSwipedLeft={this.handleNext} style={{touchAction: 'none'}}>
           <div id="controls">
             <div id="back" className="navButton" onClick={this.handlePrevious}>
@@ -95,6 +97,7 @@ class Work extends React.Component {
             </div>
           </div>
         </Swipeable>
+
       </div>
     );
   }

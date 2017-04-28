@@ -1,0 +1,207 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900');
+
+@import 'variables.scss';
+@import 'slides.scss';
+@import 'content.scss';
+
+// GLOBAL
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  color: #fff;
+  ::selection {
+    background: rgb(43, 214, 199); /* WebKit/Blink Browsers */
+  }
+  a {
+    text-decoration: inherit;
+    color: #fff;
+  }
+}
+#app, #app-container {
+  min-height: 100%;
+}
+
+// OVERLAY - Site title + desktop menu (above all other layers)
+#overlay {
+  position: absolute;
+  @media only screen and (max-width : 768px) {
+    width: 100%;
+  }
+  #header {
+    flex: 0 0 auto;
+    padding: 30px;
+    z-index: 2;
+    h1 {
+      font-size: 4em;
+      font-weight: 600;
+      margin: 0;
+    }
+    span {
+      font-weight: 100;
+    }
+    h2 {
+      font-size: 1.2em;
+      font-weight: 100;
+      margin: 0;
+      margin-top: 5px;
+    }
+    @media only screen and (max-width : 768px) {
+      // background-color: rgba(0,0,0,.3);
+      padding: 15px;
+      padding-top: 10px;
+      h1 {
+        font-size: 3em;
+      }
+      h2 {
+        font-size: 0.9em;
+      }
+      #menu-btn { display: inline-block; }
+    }
+  }
+  #menu {
+    flex: 0 0 auto;
+    width: 300px;
+    padding-left: 30px;
+    ul {
+      margin: 25px 0;
+      list-style-type: none;
+      padding: 0;
+      font-size: 1.6em;
+      font-weight: 100;
+      li {
+        cursor: pointer;
+        padding: 5px 10px;
+        &:hover {
+          background-color: #fff;
+          opacity: 0.8;
+          color: #727272;
+          font-weight: 300;
+        }
+      }
+      a.active li {
+        border-left: 5px solid #fff;
+      }
+    }
+    @media only screen and (max-width : 768px) {
+      background-color: rgba(0,0,0,0.5);
+      margin-left: 15px;
+      margin-right: 15px;
+      width: 60%;
+      padding: 0;
+      ul { padding: 10px; }
+    }
+  }
+}
+
+// MOBILE DRAWER MENU + BUTTON
+#menu-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 14px;
+  margin: 10px;
+  font-size: 1.3em;
+  cursor: pointer;
+  background-color: rgba(0,0,0,0.2);
+  @media only screen and (min-width : 768px) {
+    display: none;
+  }
+}
+#mobile-menu {
+  position: absolute;
+  padding: 20px;
+  top: 0;
+  left: -200px;
+  height: 100%;
+  background-color: rgba(0,0,0,0.9);
+  box-shadow: 0px 0px 0px 0px black;
+  transition: all 0.5s ease;
+  ul {
+    margin: 25px 0;
+    list-style-type: none;
+    padding: 0;
+    font-size: 1.6em;
+    font-weight: 100;
+    li {
+      cursor: pointer;
+      padding: 5px 10px;
+    }
+    a.active li {
+      border-left: 5px solid #fff;
+    }
+  }
+  &.open {
+    left: 0px;
+    box-shadow: 0px 0px 10px 0px black;
+  }
+}
+
+// BACKGROUND - Gradient and 3D Model
+#background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  canvas {
+    width: 100%;
+  }
+
+  // gradient (66% to right)
+  background: $bkg-light;
+  background: -moz-radial-gradient(50% 50%, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+  background: -webkit-gradient(radial, 50% 50%, 0px, center center, 100%, color-stop(0%, $bkg-light), color-stop(100%, $bkg-dark));
+  background: -webkit-radial-gradient(50% 50%, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+  background: -o-radial-gradient(50% 50%, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+  background: -ms-radial-gradient(50% 50%, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+  background: radial-gradient(ellipse at 50% 50%, $bkg-light 0%, $bkg-dark 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#aaaaaa', GradientType=1 );
+
+  @media only screen and (max-width : 768px) {
+    // gradient
+    background: $bkg-light;
+    background: -moz-radial-gradient(center, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+    background: -webkit-gradient(radial, center, 0px, center center, 100%, color-stop(0%, $bkg-light), color-stop(100%, $bkg-dark));
+    background: -webkit-radial-gradient(center, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+    background: -o-radial-gradient(center, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+    background: -ms-radial-gradient(center, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+    background: radial-gradient(ellipse at center, $bkg-light 0%, $bkg-dark 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#aaaaaa', GradientType=1 );
+  }
+  #threeBlur {
+    filter: blur(1px);
+    transition: all 1s ease;
+    &.blur {
+      filter: blur(3px);
+      transition: all 1s ease;
+    }
+  }
+  #darken {
+    background-color: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: none;
+    @media only screen and (max-width : 768px) {
+      display: block;
+    }
+  }
+}
+
+// MISC
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
