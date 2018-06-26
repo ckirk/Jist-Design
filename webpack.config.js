@@ -1,3 +1,9 @@
+// needed for env variable import
+require('dotenv').config();
+
+// upload contents of /build directory directly to S3
+var S3Plugin = require('webpack-s3-plugin');
+
 module.exports = {
 	entry: "./app/main.js",
 	output: {
@@ -43,4 +49,18 @@ module.exports = {
 			}
 		]
 	},
+	plugins: [
+    new S3Plugin({
+      // Exclude uploading of html
+      exclude: /.*\.html$/,
+      // s3Options are required
+      s3Options: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+      },
+      s3UploadOptions: {
+        Bucket: 'jistdesign.com'
+      }
+    })
+  ]
 };
