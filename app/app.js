@@ -63,7 +63,8 @@ class Base extends React.Component {
       <div id="app-container">
 
         <div id="background">
-          <div id="threeBlur" className={ window.innerWidth < 768 || this.props.location.pathname != '/' ? 'blur' : '' }>
+          {/* <div id="threeBlur" className={ window.innerWidth < 768 || this.props.location.pathname != '/' ? 'blur' : '' }> */}
+          <div id="threeBlur" className='blur'>
             <div id="3dInject"></div>
           </div>
           <div id="darken"></div>
@@ -73,7 +74,7 @@ class Base extends React.Component {
           <div id='top' className={this.props.location.pathname == '/process' ? 'process' : ''}></div>
           <div id='middle'>
             <div id='left'></div>
-              { this.props.location.pathname == '/work' || this.props.location.pathname == '/' ?
+              { this.props.location.pathname == '/work' ?
                 <ReactCSSTransitionGroup
                   transitionName="ourWork"
                   transitionAppear={true}
@@ -96,7 +97,7 @@ class Base extends React.Component {
                 JIST <span>Design</span>
               </h1>
             </Link>
-            <h2><span>Industrial Design // Electronics // Prototyping // Manufacturing</span></h2>
+            <h2><span>Industrial Design // Electronics // IoT // Prototyping // Manufacturing</span></h2>
           </div>
           <Menu pathName={this.props.location.pathname}/>
         </div>

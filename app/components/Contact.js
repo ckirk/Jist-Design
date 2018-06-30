@@ -4,24 +4,16 @@ const Contact = (props) => {
   return (
     <div id="contactContainer">
       <div id="contactHeader">
-        <h1>Contact</h1>
-        <p className='subheading' >Let's make things together!</p>
+        <h1>Let's make things <br/>together</h1>
+        {/* <p className='subheading' >Let's make things <br/>together</p> */}
       </div>
       <div id="contactBody">
         <div className='half'>
-          <a href="tel:+19738092503">
+          <a href='mailto:info@jistdesign.com'>
             <div id='iconBox'>
-              <i className="fa fa-mobile left" aria-hidden="true"></i>
+              <i className="fas fa-envelope right" aria-hidden="true"></i>
             </div>
-            973.809.2503
-          </a>
-        </div>
-        <div className='half'>
-          <a href='mailto:ckirkinis@gmail.com'>
-            <div id='iconBox'>
-              <i className="fa fa-envelope right" aria-hidden="true"></i>
-            </div>
-              ckirkinis@gmail.com
+              info@jistdesign.com
           </a>
         </div>
       </div>
