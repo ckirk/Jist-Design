@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+// import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 // Component Imports
 import Process from './components/Process';
@@ -12,17 +12,11 @@ import Home from './components/Home';
 import Menu from './components/Menu';
 import MobileMenu from './components/MobileMenu';
 import Slider from './components/Slider';
+import Background from './components/Background';
 
-
-// 3D Shazz
-import Inject3dModel from './ThreeStuff';
 
 // REACT-ROUTER
 class App extends Component {
-  componentDidMount() {
-    Inject3dModel();
-  }
-
   render () {
     return (
       <Router history={hashHistory}>
@@ -56,6 +50,7 @@ class Base extends React.Component {
 
   toggleOpen = () => {
     this.setState({ open: !this.state.open });
+    // console.log('clicked!');
   }
 
   render() {
@@ -63,16 +58,46 @@ class Base extends React.Component {
       <div id="app-container">
 
         {/* BACKGROUND */}
-        <div id="background">
-          {/* <div id="threeBlur" className={ window.innerWidth < 768 || this.props.location.pathname != '/' ? 'blur' : '' }> */}
-          <div id="threeBlur" className='blur'>
-            <div id="3dInject"></div>
+        <Background />
+
+        {/* MAIN */}
+        <div id="mainContainer">
+
+          {/* HEADER */}
+          <div id="header">
+            <Link to='/'>
+              <h1>
+                JIST <span>Design</span>
+              </h1>
+            </Link>
+            <h2>
+              <span>Industrial Design // Electronics // IoT // Prototyping // Manufacturing</span>
+            </h2>
+
+            {/* MOBILE MENU BTN */}
+            <div id="menu-btn" onClick={this.toggleOpen}>
+              <i className="fa fa-bars" aria-hidden="true"></i>
+            </div>
+
           </div>
-          <div id="darken"></div>
+
+          {/* BODY */}
+          <div id="body">
+
+            {/* MENU */}
+            <div id="menu">
+              <Menu pathName={this.props.location.pathname}/>
+            </div>
+
+            {/* MAIN CONTENT */}
+            <div id="contentContainer">
+              {this.props.children}
+            </div>
+          </div>
         </div>
 
-        {/* CONTENT */}
-        <div id="content">
+        {/* CONTENT - retire */}
+        {/* <div id="content">
           <div id='top' className={this.props.location.pathname == '/process' ? 'process' : ''}></div>
           <div id='middle'>
             <div id='left'></div>
@@ -90,26 +115,10 @@ class Base extends React.Component {
             <div id='right'></div>
           </div>
           <div id='bottom' className={ this.props.location.pathname == '/process' ? 'hide' : '' }></div>
-        </div>
+        </div> */}
 
-        {/* OVERLAY */}
-        <div id="overlay">
-          <div id="header">
-            <Link to='/'>
-              <h1>
-                JIST <span>Design</span>
-              </h1>
-            </Link>
-            <h2><span>Industrial Design // Electronics // IoT // Prototyping // Manufacturing</span></h2>
-          </div>
-          <Menu pathName={this.props.location.pathname}/>
-        </div>
 
-        {/* MOBILE MENU */}
-        <div id="menu-btn" onClick={this.toggleOpen}>
-          <i className="fa fa-bars" aria-hidden="true"></i>
-        </div>
-
+        {/* MOBILE MENU PANE */}
         <MobileMenu open={this.state.open} closeMenu={this.toggleOpen} />
       </div>
     )
