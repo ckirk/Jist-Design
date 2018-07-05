@@ -3,8 +3,6 @@ import React, { Component } from 'react';
 // 3D Shazz
 import Inject3dModel from '../ThreeStuff';
 
-
-
 class Background extends React.Component {
   constructor(props) {
     super(props);
@@ -18,7 +16,7 @@ class Background extends React.Component {
   render() {
     return (
       <div id="background">
-        <div id="threeBlur" className='blur'>
+        <div id="threeBlur" className={'blur' + (this.props.pathName == '/work' ? ' hidden' : '')}>
           <div id="3dInject"></div>
         </div>
         <div id="darken"></div>

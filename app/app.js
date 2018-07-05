@@ -11,7 +11,7 @@ import Services from './components/Services';
 import Home from './components/Home';
 import Menu from './components/Menu';
 import MobileMenu from './components/MobileMenu';
-import Slider from './components/Slider';
+// import Slider from './components/Slider';
 import Background from './components/Background';
 
 
@@ -26,7 +26,7 @@ class App extends Component {
           <Route path='process' component={Process} />
           <Route path='services' component={Services} />
           <Route path='contact' component={Contact} />
-          <Route path='slider' component={Slider} />
+          {/* <Route path='slider' component={Slider} /> */}
           <Route path='*' component={NotFound} />
         </Route>
       </Router>
@@ -58,7 +58,7 @@ class Base extends React.Component {
       <div id="app-container">
 
         {/* BACKGROUND */}
-        <Background />
+        <Background pathName={this.props.location.pathname} />
 
         {/* MAIN */}
         <div id="mainContainer">

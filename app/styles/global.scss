@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900');
 
 @import 'variables.scss';
-@import 'slides.scss';
+@import 'work.scss';
 @import 'content.scss';
 @import 'main.scss';
 
@@ -24,47 +24,6 @@ body {
 }
 #app, #app-container {
   min-height: 100%;
-}
-
-// OVERLAY - Site title + desktop menu (above all other layers)
-#overlay {
-  position: absolute;
-  @media only screen and (max-width : 768px) {
-    width: 100%;
-  }
-
-  // remove
-  #header {
-    flex: 0 0 auto;
-    padding: 30px;
-    z-index: 2;
-    h1 {
-      font-size: 4em;
-      font-weight: 600;
-      margin: 0;
-    }
-    span {
-      font-weight: 100;
-    }
-    h2 {
-      font-size: 1.2em;
-      font-weight: 100;
-      margin: 0;
-      margin-top: 5px;
-    }
-    @media only screen and (max-width : 768px) {
-      // background-color: rgba(0,0,0,.3);
-      padding: 15px;
-      padding-top: 10px;
-      h1 {
-        font-size: 3em;
-      }
-      h2 {
-        font-size: 0.9em;
-      }
-      #menu-btn { display: inline-block; }
-    }
-  }
 }
 
 // MOBILE DRAWER MENU
@@ -135,6 +94,9 @@ body {
     &.blur {
       filter: blur(3px);
       transition: all 1s ease;
+    }
+    &.hidden {
+      display: none;
     }
   }
   #darken {

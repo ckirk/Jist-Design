@@ -10,7 +10,7 @@ class Work extends React.Component {
       page: 0,
       length: slideData.length,
       slidePosition: 0,
-      viewerWidth: window.innerWidth
+      viewerWidth: null
     }
   };
 
@@ -52,19 +52,23 @@ class Work extends React.Component {
   };
 
   updateViewerWidth = () => {
+    // console.log( 'test', document.getElementById("viewer").offsetWidth );
+    // for full screen use window.innerWidth
+    // console.log('updating viewer width!');
     this.setState({
-      viewerWidth: window.innerWidth,
-      slidePosition: this.state.page * window.innerWidth
+      viewerWidth: document.getElementById("viewer").offsetWidth,
+      slidePosition: this.state.page * document.getElementById("viewer").offsetWidth
     });
   }
 
   componentWillMount = () => {
-    this.updateViewerWidth;
+    // this.updateViewerWidth();
   }
 
   componentDidMount = () => {
     window.addEventListener("resize", this.updateViewerWidth);
     document.addEventListener("keydown", this.handleKeyDown);
+    this.updateViewerWidth();
   }
 
   componentWillUnmount = () => {
