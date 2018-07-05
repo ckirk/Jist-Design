@@ -62,6 +62,7 @@ class Base extends React.Component {
     return (
       <div id="app-container">
 
+        {/* BACKGROUND */}
         <div id="background">
           {/* <div id="threeBlur" className={ window.innerWidth < 768 || this.props.location.pathname != '/' ? 'blur' : '' }> */}
           <div id="threeBlur" className='blur'>
@@ -70,6 +71,7 @@ class Base extends React.Component {
           <div id="darken"></div>
         </div>
 
+        {/* CONTENT */}
         <div id="content">
           <div id='top' className={this.props.location.pathname == '/process' ? 'process' : ''}></div>
           <div id='middle'>
@@ -90,6 +92,7 @@ class Base extends React.Component {
           <div id='bottom' className={ this.props.location.pathname == '/process' ? 'hide' : '' }></div>
         </div>
 
+        {/* OVERLAY */}
         <div id="overlay">
           <div id="header">
             <Link to='/'>
@@ -102,6 +105,7 @@ class Base extends React.Component {
           <Menu pathName={this.props.location.pathname}/>
         </div>
 
+        {/* MOBILE MENU */}
         <div id="menu-btn" onClick={this.toggleOpen}>
           <i className="fa fa-bars" aria-hidden="true"></i>
         </div>
