@@ -2,20 +2,15 @@ import React, { PropTypes } from 'react';
 
 const Contact = (props) => {
   return (
-    <div id="contactContainer">
-      <div id="contactHeader">
-        <h1>Let's make things <br/>together</h1>
-        {/* <p className='subheading' >Let's make things <br/>together</p> */}
-      </div>
-      <div id="contactBody">
-        <div className='half'>
-          <a href='mailto:info@jistdesign.com'>
-            <div id='iconBox'>
-              <i className="fas fa-envelope right" aria-hidden="true"></i>
-            </div>
-              info@jistdesign.com
-          </a>
-        </div>
+    <div className='centeredContainer'>
+      <div id="contact" className='centered'>
+        <h1><span className='darken'>Let's make things <br/> together </span></h1>
+        <a href='mailto:info@jistdesign.com'>
+          <div id='iconBox'>
+            <i className="fas fa-envelope right" aria-hidden="true"></i>
+          </div>
+            info@jistdesign.com
+        </a>
       </div>
     </div>
   )

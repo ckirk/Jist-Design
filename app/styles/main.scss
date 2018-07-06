@@ -103,6 +103,32 @@
       // background-color: green;
       position: relative;
       flex: 1 0 auto;
+      display: flex;
+      .centeredContainer {
+        display: flex;
+        flex: 1 0 auto;
+        align-items: center;
+        justify-content: center;
+        .centered {
+          margin-top: -150px;
+        }
+      }
+      #services {
+        padding: 30px;
+        background-color: rgba(0,0,0,0.5);
+        h1 {
+          margin: 0;
+          font-size: 2.3em;
+        }
+      }
+      #contact {
+        .darken {
+          background-color: rgba(0,0,0,0.5);
+          font-size: 2.5em;
+          padding: 5px;
+          line-height: 110px;
+        }
+      }
     }
   }
 }

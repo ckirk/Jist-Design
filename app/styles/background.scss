@@ -1,0 +1,57 @@
+// BACKGROUND - Gradient and 3D Model
+#background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  canvas {
+    width: 100%;
+  }
+
+  // gradient (66% to right)
+  background: $bkg-light;
+  background: -moz-radial-gradient(50% 50%, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+  background: -webkit-gradient(radial, 50% 50%, 0px, center center, 100%, color-stop(0%, $bkg-light), color-stop(100%, $bkg-dark));
+  background: -webkit-radial-gradient(50% 50%, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+  background: -o-radial-gradient(50% 50%, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+  background: -ms-radial-gradient(50% 50%, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+  background: radial-gradient(ellipse at 50% 50%, $bkg-light 0%, $bkg-dark 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#aaaaaa', GradientType=1 );
+
+  @media only screen and (max-width : 768px) {
+    // gradient
+    background: $bkg-light;
+    background: -moz-radial-gradient(center, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+    background: -webkit-gradient(radial, center, 0px, center center, 100%, color-stop(0%, $bkg-light), color-stop(100%, $bkg-dark));
+    background: -webkit-radial-gradient(center, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+    background: -o-radial-gradient(center, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+    background: -ms-radial-gradient(center, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
+    background: radial-gradient(ellipse at center, $bkg-light 0%, $bkg-dark 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#aaaaaa', GradientType=1 );
+  }
+  #threeBlur {
+    filter: blur(1px);
+    transition: all 1s ease;
+    &.blur {
+      filter: blur(3px);
+      transition: all 1s ease;
+    }
+    &.hidden {
+      display: none;
+    }
+  }
+  #darken {
+    background-color: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: none;
+    @media only screen and (max-width : 768px) {
+      display: block;
+    }
+  }
+}
