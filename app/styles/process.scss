@@ -1,0 +1,79 @@
+#contentContainer {
+  #process {
+    // margin-top: -150;
+    display: flex;
+    // flex-direction: row;
+    // flex-wrap: wrap;
+    flex: 1 1 auto;
+    // justify-content: flex-start;
+    // align-items: center;
+    // align-content: center;
+    justify-content: center;
+    align-items: center;
+    @media only screen and (max-width : 1059px) {
+      align-items: flex-start;
+    }
+    .stepsContainer {
+      flex: 1 1 auto;
+      max-width: 810px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      overflow-y: auto;
+      @media only screen and (max-width : 1059px) {
+        margin: 15px 10px;
+      }
+      .step {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        flex: 0 0 250px;
+        height: 250px;
+        margin: 10px;
+        background-color: rgba(0,0,0,0.5);
+        @media only screen and (max-width : 1059px) {
+          flex: 1 1 45%;
+          min-width: 230px;
+        }
+        // @media only screen and (max-width : 768px) {
+        //   flex: 1 1 100%;
+        //   margin: 15px 30px;
+        //   height: 200px;
+        // }
+        h2 {
+          margin-bottom: 0;
+          margin-top: 30px;
+          font-weight: 200;
+        }
+        &:hover {
+          background-color: rgba(0,0,0,0.8);
+          .fa, .far, .fas, h2 {
+            display: none;
+          }
+          .details {
+            display: block;
+          }
+        }
+        .icon {
+          font-size: 5em;
+        }
+        .details {
+          display: none;
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          padding: 20px;
+          overflow-y: auto;
+          p {
+            margin: 0;
+            font-size: 1em;
+          }
+        }
+      }
+    }
+  }
+}

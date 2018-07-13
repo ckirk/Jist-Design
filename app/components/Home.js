@@ -2,8 +2,11 @@ import React, { PropTypes } from 'react';
 
 const Home = (props) => {
   return (
-    <div id="valuePropContainer">
-      <h1>We Turn Your Ideas Into Beautiful Products</h1>
+    <div className='centeredContainer'>
+      <div id="valueProp" className='centered'>
+        <h1><span>Turn Your Ideas</span></h1>
+        <h1><span>Into Beautiful Products</span></h1>
+      </div>
     </div>
   )
 }

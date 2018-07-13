@@ -4,13 +4,15 @@ const Contact = (props) => {
   return (
     <div className='centeredContainer'>
       <div id="contact" className='centered'>
-        <h1><span className='darken'>Let's make things <br/> together </span></h1>
-        <a href='mailto:info@jistdesign.com'>
-          <div id='iconBox'>
-            <i className="fas fa-envelope right" aria-hidden="true"></i>
-          </div>
-            info@jistdesign.com
-        </a>
+        {/* <h1><span className='highlight'>Let's make things <br/> together :)</span></h1> */}
+        <h1><span>Let's make things</span></h1>
+        <h1><span>together :)</span></h1>
+        <div className="button">
+          <a href='mailto:info@jistdesign.com'>
+            {/* <i className="fas fa-fw fa-envelope right" aria-hidden="true"></i>&nbsp; */}
+            Contact Us
+          </a>
+        </div>
       </div>
     </div>
   )

@@ -3,83 +3,69 @@ import React, { PropTypes } from 'react';
 const Process = (props) => {
   return (
     <div id='process'>
+      <div className="stepsContainer">
 
-      <div className='icon'>
-        <i className="fa fa-lightbulb-o" aria-hidden="true"></i>
-      </div>
-      <h2>Idea</h2>
-      <div className='details'>
-        <ul>
-          <li>We specialize in converting ideas into functional, beautiful products.</li>
-          <li>They don't need to be fully developed and it's okay if they're a little crazy.</li>
-          <li>We can work with you to mold your idea into something that is both possible with today's technology and fits your budget.</li>
-        </ul>
-      </div>
+        <div className="step">
+          <div className='icon'>
+            <i className="fa fa-lightbulb-o" aria-hidden="true"></i>
+          </div>
+          <h2>Idea</h2>
+          <div className="details">
+            <p>We specialize in converting ideas into beautiful, functional products. We'll work with you to mold your idea into something that is both practical with today's technology and fits your budget.</p>
+          </div>
+        </div>
 
-      <div className='icon'>
-        <i className="fa fa-flask" aria-hidden="true"></i>
-      </div>
-        <h2>Research</h2>
-      <div className='details'>
-        <ul>
-          <li>What materials can we use? How will they affect performance?</li>
-          <li>How can we design the product to be as small as possible?</li>
-          <li>What electrical components need to be integrated?</li>
-        </ul>
-      </div>
+        <div className="step">
+          <div className='icon'>
+            <i className="fa fa-flask" aria-hidden="true"></i>
+          </div>
+          <h2>Research</h2>
+          <div className="details">
+            <p>What unique challenges does your project bring to the table? We'll use both design and engineering to find elegant solutions to optimize your user experience.</p>
+          </div>
+        </div>
 
-      <div className='icon'>
-        <i className="fa fa-laptop" aria-hidden="true"></i>
-      </div>
-        <h2>Design</h2>
-      <div className='details'>
-        <ul>
-          <li>Generally we start with rough hand-drawn sketches in order to rapidly iterate while ensuring we're on the same page</li>
-          <li>As the design matures we move to 2D computer visuializations</li>
-          <li>After that theres one more thing we do</li>
-        </ul>
-      </div>
+        <div className="step">
+          <div className='icon'>
+            <i className="fa fa-laptop" aria-hidden="true"></i>
+          </div>
+          <h2>Design</h2>
+          <div className="details">
+            <p>We start with hand-drawn sketches in order to rapidly iterate on ideas. As the design matures, we move to 2D digital mockups, then finally to 3D modeling.</p>
+          </div>
+        </div>
 
-      <div className='icon'>
-        <i className="fa fa-cube" aria-hidden="true"></i>
+        <div className="step">
+          <div className='icon'>
+            <i className="fa fa-cube" aria-hidden="true"></i>
+          </div>
+          <h2>Prototype</h2>
+          <div className="details">
+            <p>Once we've established a winning design, we'll begin manuacturing a physical prototype using cutting-edge rapid manufacturing techniques such as 3D printing, lazer cutting, and CNC.</p>
+          </div>
+        </div>
+
+        <div className="step">
+          <div className='icon'>
+            <i className="fa fa-wrench" aria-hidden="true"></i>
+          </div>
+          <h2>Testing</h2>
+          <div className="details">
+            <p>A lot can be learned from a physical prototype. Does it look and behave as expected? What do potential customers and investors think? What needs to be changed? What can be improved?</p>
+          </div>
+        </div>
+
+        <div className="step">
+          <div className='icon'>
+            <i className="fa fa-cubes" aria-hidden="true"></i>
+          </div>
+          <h2>Manufacturing</h2>
+          <div className="details">
+            <p>Is your product ready for the wild? We'll optimize your design for efficent, cost-effective manufacturing at scale.</p>
+          </div>
+        </div>
+
       </div>
-        <h2>Prototype</h2>
-      <div className='details'>
-        <ul>
-          <li>First we do this</li>
-          <li>Then we look into that</li>
-          <li>After that theres one more thing we do</li>
-        </ul>
-      </div>
-
-      <div className='icon'>
-        <i className="fa fa-wrench" aria-hidden="true"></i>
-      </div>
-        <h2>Testing</h2>
-      <div className='details'>
-        <ul>
-          <li>First we do this</li>
-          <li>Then we look into that</li>
-          <li>After that theres one more thing we do</li>
-        </ul>
-      </div>
-
-      <div className='icon'>
-        <i className="fa fa-cubes" aria-hidden="true"></i>
-      </div>
-        <h2>Manufacturing</h2>
-      <div className='details'>
-        <ul>
-          <li>First we do this</li>
-          <li>Then we look into that</li>
-          <li>After that theres one more thing we do</li>
-        </ul>
-      </div>
-
-
-
-
-
     </div>
   )
 }

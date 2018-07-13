@@ -119,7 +119,8 @@ class DetailsBox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: window.innerWidth > 768 ? true : false,
+      // open: window.innerWidth > 768 ? true : false,
+      open: true,
       mobile: window.innerWidth > 768 ? false : true
     }
   };
