@@ -42,6 +42,27 @@ const ContentBox = (props) => (
   </div>
 )
 
+const Header = (props) => (
+  <div id='stickyHeader'>
+
+    <Link to='/' className='logo'>
+      <img src='./images/logo_large_circle.png' alt=""/>
+      <h1>
+        JIST <span>Design</span>
+      </h1>
+      <h2>Industrial Design // Electronics // IoT // Prototyping // Manufacturing</h2>
+    </Link>
+
+    <div className="menu">
+      <Link to='/work' activeClassName="active">Our Work</Link>
+      <Link to='/process' activeClassName="active">Our Process</Link>
+      <Link to='/services' activeClassName="active">Services</Link>
+      <Link to='/contact' activeClassName="active">Contact</Link>
+    </div>
+
+  </div>
+)
+
 class Base extends React.Component {
   constructor(props) {
     super(props);
@@ -60,12 +81,15 @@ class Base extends React.Component {
         {/* BACKGROUND */}
         <Background pathName={this.props.location.pathname} />
 
+        {/* <Header /> */}
+
         {/* MAIN */}
         <div id="mainContainer">
 
           {/* HEADER */}
           <div id="header">
             <Link to='/'>
+                <img src='./images/logo_large_circle.png' alt=""/>
               <h1>
                 JIST <span>Design</span>
               </h1>
