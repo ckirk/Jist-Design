@@ -16,6 +16,7 @@ class Background extends React.Component {
   render() {
     return (
       <div id="background">
+        {/* hide 3d if on work page */}
         <div id="threeBlur" className={'blur' + (this.props.pathName == '/work' ? ' hidden' : '')}>
           <div id="3dInject"></div>
         </div>

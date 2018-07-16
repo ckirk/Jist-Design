@@ -28,6 +28,10 @@ body {
   min-height: 100%;
 }
 
+#background {
+  z-index: -1;
+}
+
 // MOBILE DRAWER MENU
 #mobile-menu {
   position: absolute;
