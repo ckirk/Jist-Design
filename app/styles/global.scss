@@ -28,10 +28,6 @@ body {
   min-height: 100%;
 }
 
-#background {
-  z-index: -1;
-}
-
 // MOBILE DRAWER MENU
 #mobile-menu {
   position: absolute;
@@ -63,6 +59,84 @@ body {
   }
 }
 
+// STICKY HEADER
+#stickyHeader {
+  background-color: rgba(0,0,0,0.6);
+  position: fixed;
+  width: 100%;
+  height: 80px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .logo {
+    display: flex;
+    align-items: center;
+    img {
+      @media only screen and (max-width : 768px) {
+        margin-left: 10px;
+      }
+      margin-left: 20px;
+      display: inline-block;
+      vertical-align: middle;
+      height: 60px;
+      width: 60px;
+      margin-right: 10px;
+    }
+    h1 {
+      // margin-right: 40px;
+      flex-shrink: 0;
+    }
+    span {
+      font-weight: 200;
+    }
+    h2 {
+      margin: 0 40px;
+      font-size: .9em;
+      font-weight: 200;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      @media only screen and (max-width : 768px) {
+        display: none;
+      }
+    }
+
+  }
+  .menu {
+    flex-shrink: 0;
+    margin-right: 20px;
+    @media only screen and (max-width : 768px) {
+      display: none;
+    }
+    a {
+      padding: 0;
+      font-size: 1.2em;
+      font-weight: 200;
+      cursor: pointer;
+      padding: 5px 10px;
+      margin: 0 1px;
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+        // opacity: 0.8;
+        // color: #000;
+      }
+      &.active {
+        // border-bottom: 3px solid #fff;
+        box-shadow:inset 0px -2px 0px #fff;
+      }
+    }
+  }
+  #menu-btn {
+    padding: 20px;
+    font-size: 1.5em;
+    @media only screen and (min-width : 768px) {
+      display: none;
+    }
+  }
+}
 
 // MISC
 .noselect {

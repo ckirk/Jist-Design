@@ -21564,11 +21564,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	// import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 	// Component Imports
-
-	// import Slider from './components/Slider';
 
 
 	// REACT-ROUTER
@@ -21604,18 +21601,6 @@
 	  return App;
 	}(_react.Component);
 
-	var ContentBox = function ContentBox(props) {
-	  return _react2.default.createElement(
-	    'div',
-	    { id: 'contentBoxContainer', className: props.location == '/process' ? 'process' : '' },
-	    _react2.default.createElement(
-	      'div',
-	      { id: 'contentBox' },
-	      props.pushChildren
-	    )
-	  );
-	};
-
 	var Base = function (_React$Component) {
 	  _inherits(Base, _React$Component);
 
@@ -21624,7 +21609,7 @@
 
 	    var _this2 = _possibleConstructorReturn(this, (Base.__proto__ || Object.getPrototypeOf(Base)).call(this, props));
 
-	    _this2.toggleOpen = function () {
+	    _this2.toggleMobileMenu = function () {
 	      _this2.setState({ open: !_this2.state.open });
 	      // console.log('clicked!');
 	    };
@@ -21639,58 +21624,22 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { id: 'app-container' },
-	        _react2.default.createElement(_Background2.default, { pathName: this.props.location.pathname }),
+	        this.props.location.pathname == '/work' && _react2.default.createElement(StickyHeader, { toggleMobileMenu: this.toggleMobileMenu }),
+	        this.props.location.pathname != '/work' ?
+	        // Classic Design
+	        _react2.default.createElement(
+	          BasicContainer,
+	          { toggleMobileMenu: this.toggleMobileMenu, pathName: this.props.location.pathname },
+	          this.props.children
+	        ) : // New Design - currently just for 'work'
+	        // sticky header, top menu nav, full width, scrollable
 	        _react2.default.createElement(
 	          'div',
-	          { id: 'mainContainer' },
-	          _react2.default.createElement(
-	            'div',
-	            { id: 'header' },
-	            _react2.default.createElement(
-	              _reactRouter.Link,
-	              { to: '/' },
-	              _react2.default.createElement(
-	                'h1',
-	                null,
-	                'JIST ',
-	                _react2.default.createElement(
-	                  'span',
-	                  null,
-	                  'Design'
-	                )
-	              )
-	            ),
-	            _react2.default.createElement(
-	              'h2',
-	              null,
-	              _react2.default.createElement(
-	                'span',
-	                null,
-	                'Industrial Design // Electronics // IoT // Prototyping // Manufacturing'
-	              )
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { id: 'menu-btn', onClick: this.toggleOpen },
-	              _react2.default.createElement('i', { className: 'fa fa-bars', 'aria-hidden': 'true' })
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { id: 'body' },
-	            _react2.default.createElement(
-	              'div',
-	              { id: 'menu' },
-	              _react2.default.createElement(_Menu2.default, { pathName: this.props.location.pathname })
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { id: 'contentContainer' },
-	              this.props.children
-	            )
-	          )
+	          { id: 'workContainer' },
+	          this.props.children
 	        ),
-	        _react2.default.createElement(_MobileMenu2.default, { open: this.state.open, closeMenu: this.toggleOpen })
+	        _react2.default.createElement(_MobileMenu2.default, { open: this.state.open, closeMenu: this.toggleMobileMenu }),
+	        _react2.default.createElement(_Background2.default, { pathName: this.props.location.pathname })
 	      );
 	    }
 	  }]);
@@ -21699,6 +21648,116 @@
 	}(_react2.default.Component);
 
 	;
+
+	var BasicContainer = function BasicContainer(props) {
+	  return _react2.default.createElement(
+	    'div',
+	    { id: 'classicContainer' },
+	    _react2.default.createElement(
+	      'div',
+	      { id: 'header' },
+	      _react2.default.createElement(
+	        _reactRouter.Link,
+	        { to: '/' },
+	        _react2.default.createElement('img', { src: './images/logo_large_circle.png', alt: '' }),
+	        _react2.default.createElement(
+	          'h1',
+	          null,
+	          'JIST ',
+	          _react2.default.createElement(
+	            'span',
+	            null,
+	            'Design'
+	          )
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'h2',
+	        null,
+	        _react2.default.createElement(
+	          'span',
+	          null,
+	          'Industrial Design // Electronics // IoT // Prototyping // Manufacturing'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { id: 'menu-btn', onClick: props.toggleMobileMenu },
+	        _react2.default.createElement('i', { className: 'fa fa-bars', 'aria-hidden': 'true' })
+	      )
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { id: 'body' },
+	      _react2.default.createElement(
+	        'div',
+	        { id: 'menu' },
+	        _react2.default.createElement(_Menu2.default, { pathName: props.pathname })
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { id: 'contentContainer' },
+	        props.children
+	      )
+	    )
+	  );
+	};
+
+	var StickyHeader = function StickyHeader(props) {
+	  return _react2.default.createElement(
+	    'div',
+	    { id: 'stickyHeader' },
+	    _react2.default.createElement(
+	      _reactRouter.Link,
+	      { to: '/', className: 'logo' },
+	      _react2.default.createElement('img', { src: './images/logo_large_circle.png', alt: '' }),
+	      _react2.default.createElement(
+	        'h1',
+	        null,
+	        'JIST ',
+	        _react2.default.createElement(
+	          'span',
+	          null,
+	          'Design'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'h2',
+	        null,
+	        'Industrial Design // Electronics // IoT // Prototyping // Manufacturing'
+	      )
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'menu' },
+	      _react2.default.createElement(
+	        _reactRouter.Link,
+	        { to: '/work', activeClassName: 'active' },
+	        'Our Work'
+	      ),
+	      _react2.default.createElement(
+	        _reactRouter.Link,
+	        { to: '/process', activeClassName: 'active' },
+	        'Our Process'
+	      ),
+	      _react2.default.createElement(
+	        _reactRouter.Link,
+	        { to: '/services', activeClassName: 'active' },
+	        'Services'
+	      ),
+	      _react2.default.createElement(
+	        _reactRouter.Link,
+	        { to: '/contact', activeClassName: 'active' },
+	        'Contact'
+	      )
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { id: 'menu-btn', onClick: props.toggleMobileMenu },
+	      _react2.default.createElement('i', { className: 'fa fa-bars', 'aria-hidden': 'true' })
+	    )
+	  );
+	};
 
 	var NotFound = function NotFound(props) {
 	  return _react2.default.createElement(
@@ -27117,8 +27176,8 @@
 	    key: 'render',
 	    value: function render() {
 	      // Build slides from slideData Object
-	      var slides = _slideData2.default.map(function (object, index) {
-	        return _react2.default.createElement(Slide, { key: index, title: object.title, image: object.image, description: object.description });
+	      var projects = _slideData2.default.map(function (object, index) {
+	        return _react2.default.createElement(Project, { key: index, title: object.title, image: object.image, description: object.description });
 	      });
 
 	      return _react2.default.createElement(
@@ -27130,7 +27189,7 @@
 	          _react2.default.createElement(
 	            'div',
 	            { id: 'slideWrapper', style: { transform: 'translateX(-' + this.state.slidePosition + 'px)' } },
-	            slides
+	            projects
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -27168,13 +27227,41 @@
 
 	;
 
-	var Slide = function Slide(props) {
+	var Project = function Project(props) {
 	  return _react2.default.createElement(
 	    'div',
-	    { className: 'slide', style: {
-	        backgroundImage: 'url("' + props.image + '")'
-	      } },
-	    _react2.default.createElement(DetailsBox, { title: props.title, description: props.description })
+	    { className: 'slide' },
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'hero', style: {
+	          backgroundImage: 'url("' + props.image + '")'
+	        } },
+	      _react2.default.createElement(DetailsBox, { title: props.title, description: props.description })
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'text' },
+	      _react2.default.createElement(
+	        'p',
+	        null,
+	        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ullamcorper dignissim cras tincidunt lobortis feugiat vivamus at. In pellentesque massa placerat duis ultricies lacus sed. Ac tortor dignissim convallis aenean et tortor at risus. Eget arcu dictum varius duis at consectetur. Quisque egestas diam in arcu cursus euismod quis viverra. Ultrices vitae auctor eu augue ut. Laoreet sit amet cursus sit. Mauris commodo quis imperdiet massa tincidunt nunc. Risus nullam eget felis eget nunc lobortis. Odio pellentesque diam volutpat commodo sed egestas. Netus et malesuada fames ac turpis egestas maecenas. Felis imperdiet proin fermentum leo vel orci porta non pulvinar. Semper auctor neque vitae tempus quam. Nec sagittis aliquam malesuada bibendum arcu vitae elementum curabitur. Metus aliquam eleifend mi in nulla posuere.'
+	      ),
+	      _react2.default.createElement(
+	        'p',
+	        null,
+	        'Et molestie ac feugiat sed lectus vestibulum mattis ullamcorper velit. Aliquet risus feugiat in ante metus dictum at tempor commodo. Velit laoreet id donec ultrices tincidunt arcu non sodales. Lacus sed viverra tellus in hac habitasse platea. Nunc lobortis mattis aliquam faucibus purus in massa tempor nec. Gravida quis blandit turpis cursus. Sit amet facilisis magna etiam. Dui ut ornare lectus sit amet est placerat in. Massa enim nec dui nunc mattis. Eget nulla facilisi etiam dignissim diam quis enim. Et netus et malesuada fames ac turpis egestas. Cursus vitae congue mauris rhoncus aenean vel elit scelerisque mauris. Adipiscing elit duis tristique sollicitudin nibh sit amet. Ultricies mi quis hendrerit dolor magna eget est lorem.'
+	      ),
+	      _react2.default.createElement(
+	        'p',
+	        null,
+	        'Leo duis ut diam quam. Sed odio morbi quis commodo odio aenean. Sed vulputate odio ut enim blandit volutpat maecenas volutpat. Tincidunt praesent semper feugiat nibh sed pulvinar. Vulputate eu scelerisque felis imperdiet. Non arcu risus quis varius quam quisque id. Quam pellentesque nec nam aliquam sem et tortor. Hac habitasse platea dictumst quisque sagittis purus sit amet. Ut morbi tincidunt augue interdum velit euismod in. Et sollicitudin ac orci phasellus egestas tellus. Erat nam at lectus urna duis convallis convallis tellus id.'
+	      ),
+	      _react2.default.createElement(
+	        'p',
+	        null,
+	        'In aliquam sem fringilla ut morbi tincidunt augue interdum. Est ante in nibh mauris cursus mattis molestie a. Id faucibus nisl tincidunt eget nullam non nisi. In pellentesque massa placerat duis ultricies lacus. Ut sem viverra aliquet eget sit amet. Velit dignissim sodales ut eu. Enim neque volutpat ac tincidunt vitae semper quis. Volutpat lacus laoreet non curabitur. Nec sagittis aliquam malesuada bibendum arcu vitae elementum curabitur vitae. Scelerisque fermentum dui faucibus in ornare quam viverra orci. Id faucibus nisl tincidunt eget nullam non nisi. Phasellus vestibulum lorem sed risus ultricies tristique nulla aliquet. Pharetra sit amet aliquam id diam maecenas ultricies mi eget. Tellus cras adipiscing enim eu turpis egestas pretium.'
+	      )
+	    )
 	  );
 	};
 
@@ -81008,7 +81095,7 @@
 	exports.push([module.id, "@import url(https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900);", ""]);
 
 	// module
-	exports.push([module.id, "#background {\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background: white;\n  background: -moz-radial-gradient(50% 50%, ellipse cover, white 0%, #323232 100%);\n  background: -webkit-gradient(radial, 50% 50%, 0px, center center, 100%, color-stop(0%, white), color-stop(100%, #323232));\n  background: -webkit-radial-gradient(50% 50%, ellipse cover, white 0%, #323232 100%);\n  background: -o-radial-gradient(50% 50%, ellipse cover, white 0%, #323232 100%);\n  background: -ms-radial-gradient(50% 50%, ellipse cover, white 0%, #323232 100%);\n  background: radial-gradient(ellipse at 50% 50%, white 0%, #323232 100%);\n  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#aaaaaa', GradientType=1 ); }\n  #background canvas {\n    width: 100%; }\n  @media only screen and (max-width: 768px) {\n    #background {\n      background: white;\n      background: -moz-radial-gradient(center, ellipse cover, white 0%, #323232 100%);\n      background: -webkit-gradient(radial, center, 0px, center center, 100%, color-stop(0%, white), color-stop(100%, #323232));\n      background: -webkit-radial-gradient(center, ellipse cover, white 0%, #323232 100%);\n      background: -o-radial-gradient(center, ellipse cover, white 0%, #323232 100%);\n      background: -ms-radial-gradient(center, ellipse cover, white 0%, #323232 100%);\n      background: radial-gradient(ellipse at center, white 0%, #323232 100%);\n      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#aaaaaa', GradientType=1 ); } }\n  #background #threeBlur {\n    filter: blur(1px);\n    transition: all 1s ease; }\n    #background #threeBlur.blur {\n      filter: blur(3px);\n      transition: all 1s ease; }\n    #background #threeBlur.hidden {\n      display: none; }\n  #background #darken {\n    background-color: rgba(0, 0, 0, 0.3);\n    position: absolute;\n    position: absolute;\n    top: 0;\n    bottom: 0;\n    left: 0;\n    right: 0;\n    display: none; }\n    @media only screen and (max-width: 768px) {\n      #background #darken {\n        display: block; } }\n\n#mainContainer {\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  flex-direction: column;\n  overflow: hidden; }\n  #mainContainer #header {\n    flex: 0 0 150px;\n    padding: 30px; }\n    #mainContainer #header h1 {\n      font-size: 4em;\n      font-weight: 600;\n      margin: 0; }\n    #mainContainer #header span {\n      font-weight: 100; }\n    #mainContainer #header h2 {\n      font-size: 1.2em;\n      font-weight: 100;\n      margin: 0;\n      margin-top: 5px; }\n    #mainContainer #header #menu-btn {\n      position: absolute;\n      top: 0;\n      right: 0;\n      padding: 14px;\n      margin: 10px;\n      font-size: 1.3em;\n      z-index: 1;\n      cursor: pointer;\n      background-color: rgba(0, 0, 0, 0.2); }\n      @media only screen and (min-width: 768px) {\n        #mainContainer #header #menu-btn {\n          display: none; } }\n    @media only screen and (max-width: 768px) {\n      #mainContainer #header {\n        flex: 0 0 100px;\n        padding: 15px;\n        padding-top: 10px; }\n        #mainContainer #header h1 {\n          font-size: 3em; }\n        #mainContainer #header h2 {\n          font-size: 0.9em; }\n        #mainContainer #header #menu-btn {\n          display: inline-block; } }\n  #mainContainer #body {\n    flex: 1 0 auto;\n    display: flex;\n    height: 0px;\n    flex-direction: row; }\n    #mainContainer #body #menu {\n      flex: 0 0 250px;\n      padding-left: 15px; }\n      @media only screen and (max-width: 768px) {\n        #mainContainer #body #menu {\n          display: none; } }\n      #mainContainer #body #menu ul {\n        margin: 25px 0;\n        list-style-type: none;\n        padding: 0;\n        font-size: 1.6em;\n        font-weight: 100; }\n        #mainContainer #body #menu ul li {\n          cursor: pointer;\n          padding: 5px 10px; }\n          #mainContainer #body #menu ul li:hover {\n            background-color: #fff;\n            opacity: 0.8;\n            color: #727272;\n            font-weight: 300; }\n        #mainContainer #body #menu ul a.active li {\n          border-left: 5px solid #fff; }\n      @media only screen and (max-width: 768px) {\n        #mainContainer #body #menu {\n          background-color: rgba(0, 0, 0, 0.5);\n          margin-left: 15px;\n          margin-right: 15px;\n          width: 60%;\n          padding: 0; }\n          #mainContainer #body #menu ul {\n            padding: 10px; } }\n    #mainContainer #body #contentContainer {\n      position: relative;\n      flex: 1 1 auto;\n      display: flex;\n      overflow-y: auto; }\n      #mainContainer #body #contentContainer .centeredContainer {\n        display: flex;\n        flex: 1 0 auto;\n        align-items: center;\n        justify-content: center; }\n        #mainContainer #body #contentContainer .centeredContainer .centered {\n          margin-top: -100px; }\n      #mainContainer #body #contentContainer #valueProp h1 {\n        font-size: 3.5em;\n        margin: 20px; }\n        @media only screen and (max-width: 768px) {\n          #mainContainer #body #contentContainer #valueProp h1 {\n            font-size: 1.9em; } }\n        #mainContainer #body #contentContainer #valueProp h1 span {\n          background-color: rgba(0, 0, 0, 0.5);\n          padding: 5px 10px; }\n      #mainContainer #body #contentContainer #services {\n        padding: 30px;\n        background-color: rgba(0, 0, 0, 0.5); }\n        #mainContainer #body #contentContainer #services h1 {\n          margin: 0;\n          font-size: 2.5em; }\n          @media only screen and (max-width: 768px) {\n            #mainContainer #body #contentContainer #services h1 {\n              font-size: 1.6em; } }\n      #mainContainer #body #contentContainer #contact h1 {\n        margin: 20px; }\n        #mainContainer #body #contentContainer #contact h1 span {\n          background-color: rgba(0, 0, 0, 0.5);\n          font-size: 2.5em;\n          padding: 5px 10px; }\n          @media only screen and (max-width: 768px) {\n            #mainContainer #body #contentContainer #contact h1 span {\n              font-size: 1.2em; } }\n      #mainContainer #body #contentContainer #contact .button {\n        text-align: right;\n        margin-top: 100px; }\n        @media only screen and (max-width: 768px) {\n          #mainContainer #body #contentContainer #contact .button {\n            text-align: center; } }\n        #mainContainer #body #contentContainer #contact .button a {\n          background-color: rgba(0, 211, 198, 0.9);\n          font-size: 2em;\n          padding: 20px 50px;\n          border-radius: 5px; }\n          #mainContainer #body #contentContainer #contact .button a:hover {\n            background-color: rgba(0, 196, 184, 0.9); }\n          @media only screen and (max-width: 768px) {\n            #mainContainer #body #contentContainer #contact .button a {\n              font-size: 1.5em; } }\n\n#contentContainer #ourWork {\n  position: absolute;\n  top: -150;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  transition: all 0.5s ease;\n  overflow: hidden; }\n  #contentContainer #ourWork.ourWork-appear {\n    opacity: 0; }\n    #contentContainer #ourWork.ourWork-appear.ourWork-appear-active {\n      opacity: 1; }\n  #contentContainer #ourWork #viewer {\n    height: 100%;\n    width: 100%; }\n    #contentContainer #ourWork #viewer #slideWrapper {\n      display: flex;\n      transition: all .5s ease; }\n  #contentContainer #ourWork .slide {\n    position: relative;\n    height: 100%;\n    width: 100%;\n    flex: 0 0 100%;\n    background-size: cover;\n    background-repeat: no-repeat;\n    background-position: center center; }\n    @media only screen and (max-width: 768px) {\n      #contentContainer #ourWork .slide {\n        background-size: auto 70%; } }\n    #contentContainer #ourWork .slide .detailsBox {\n      background-color: rgba(0, 0, 0, 0.2);\n      position: absolute;\n      bottom: 0;\n      right: 0;\n      padding: 20px;\n      max-width: 50%;\n      margin: 0 auto;\n      margin-bottom: 40px;\n      cursor: pointer;\n      transition: all 0.5s ease; }\n      #contentContainer #ourWork .slide .detailsBox.open {\n        bottom: -100px; }\n      #contentContainer #ourWork .slide .detailsBox p {\n        margin: 0;\n        font-size: .8em; }\n      #contentContainer #ourWork .slide .detailsBox h2 {\n        margin-top: 0;\n        margin-bottom: 15px; }\n      @media only screen and (max-width: 768px) {\n        #contentContainer #ourWork .slide .detailsBox {\n          margin-bottom: 0;\n          width: 100%;\n          max-width: 100%;\n          min-width: 100%;\n          max-height: 200px;\n          overflow: auto; }\n          #contentContainer #ourWork .slide .detailsBox h2 {\n            font-size: 1em; }\n          #contentContainer #ourWork .slide .detailsBox p {\n            margin: 0;\n            font-size: 0.7em; } }\n  #contentContainer #ourWork #controls {\n    position: absolute;\n    top: 0;\n    left: 0;\n    height: 100%;\n    width: 100%;\n    display: flex; }\n    #contentContainer #ourWork #controls .navButton {\n      flex: 0 0 50%;\n      cursor: pointer;\n      position: relative;\n      display: flex;\n      align-items: center; }\n      #contentContainer #ourWork #controls .navButton:hover .arrow {\n        opacity: 0.8;\n        transition: all 0.5s ease; }\n      #contentContainer #ourWork #controls .navButton:hover #arrowLeft {\n        transform: translateX(-10px); }\n      #contentContainer #ourWork #controls .navButton:hover #arrowRight {\n        transform: translateX(10px); }\n    #contentContainer #ourWork #controls .arrow {\n      font-size: 5em;\n      opacity: 0.2;\n      cursor: pointer;\n      flex: 1 0 auto;\n      transition: all 0.5s ease;\n      text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); }\n    #contentContainer #ourWork #controls #arrowLeft {\n      margin-left: 30px; }\n    #contentContainer #ourWork #controls #arrowRight {\n      margin-right: 30px;\n      text-align: right; }\n    @media only screen and (max-width: 768px) {\n      #contentContainer #ourWork #controls {\n        height: calc(100% - 60px); }\n        #contentContainer #ourWork #controls .arrow {\n          margin-top: 60px;\n          font-size: 3em;\n          opacity: 0.8; }\n        #contentContainer #ourWork #controls #arrowLeft {\n          margin-left: 10px; }\n        #contentContainer #ourWork #controls #arrowRight {\n          margin-right: 10px; } }\n\n#contentContainer .ourWork-leave {\n  opacity: 1; }\n  #contentContainer .ourWork-leave.ourWork-leave-active {\n    opacity: 0; }\n\n#contentContainer #process {\n  display: flex;\n  flex: 1 1 auto;\n  justify-content: center;\n  align-items: center; }\n  @media only screen and (max-width: 1059px) {\n    #contentContainer #process {\n      align-items: flex-start; } }\n  #contentContainer #process .stepsContainer {\n    flex: 1 1 auto;\n    max-width: 810px;\n    display: flex;\n    flex-wrap: wrap;\n    justify-content: center;\n    overflow-y: auto; }\n    @media only screen and (max-width: 1059px) {\n      #contentContainer #process .stepsContainer {\n        margin: 15px 10px; } }\n    #contentContainer #process .stepsContainer .step {\n      position: relative;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n      flex-direction: column;\n      flex: 0 0 250px;\n      height: 250px;\n      margin: 10px;\n      background-color: rgba(0, 0, 0, 0.5); }\n      @media only screen and (max-width: 1059px) {\n        #contentContainer #process .stepsContainer .step {\n          flex: 1 1 45%;\n          min-width: 230px; } }\n      #contentContainer #process .stepsContainer .step h2 {\n        margin-bottom: 0;\n        margin-top: 30px;\n        font-weight: 200; }\n      #contentContainer #process .stepsContainer .step:hover {\n        background-color: rgba(0, 0, 0, 0.8); }\n        #contentContainer #process .stepsContainer .step:hover .fa, #contentContainer #process .stepsContainer .step:hover .far, #contentContainer #process .stepsContainer .step:hover .fas, #contentContainer #process .stepsContainer .step:hover h2 {\n          display: none; }\n        #contentContainer #process .stepsContainer .step:hover .details {\n          display: block; }\n      #contentContainer #process .stepsContainer .step .icon {\n        font-size: 5em; }\n      #contentContainer #process .stepsContainer .step .details {\n        display: none;\n        position: absolute;\n        top: 0;\n        left: 0;\n        right: 0;\n        bottom: 0;\n        padding: 20px;\n        overflow-y: auto; }\n        #contentContainer #process .stepsContainer .step .details p {\n          margin: 0;\n          font-size: 1em; }\n\n*, *:before, *:after {\n  box-sizing: border-box; }\n\nbody {\n  margin: 0;\n  font-family: 'Roboto', sans-serif;\n  color: #fff; }\n  body ::selection {\n    background: #2bd6c7;\n    /* WebKit/Blink Browsers */ }\n  body a {\n    text-decoration: inherit;\n    color: #fff; }\n\n#app, #app-container {\n  min-height: 100%; }\n\n#mobile-menu {\n  position: absolute;\n  padding: 20px;\n  top: 0;\n  left: -200px;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.9);\n  box-shadow: 0px 0px 0px 0px black;\n  transition: all 0.2s ease; }\n  #mobile-menu ul {\n    margin: 25px 0;\n    list-style-type: none;\n    padding: 0;\n    font-size: 1.6em;\n    font-weight: 100; }\n    #mobile-menu ul li {\n      cursor: pointer;\n      padding: 5px 10px; }\n    #mobile-menu ul a.active li {\n      border-left: 5px solid #fff; }\n  #mobile-menu.open {\n    left: 0px;\n    box-shadow: 0px 0px 10px 0px black; }\n\n.noselect {\n  -webkit-touch-callout: none;\n  /* iOS Safari */\n  -webkit-user-select: none;\n  /* Safari */\n  -khtml-user-select: none;\n  /* Konqueror HTML */\n  -moz-user-select: none;\n  /* Firefox */\n  -ms-user-select: none;\n  /* Internet Explorer/Edge */\n  user-select: none;\n  /* Non-prefixed version, currently\n                                  supported by Chrome and Opera */ }\n", ""]);
+	exports.push([module.id, "#background {\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background: white;\n  background: -moz-radial-gradient(50% 50%, ellipse cover, white 0%, #323232 100%);\n  background: -webkit-gradient(radial, 50% 50%, 0px, center center, 100%, color-stop(0%, white), color-stop(100%, #323232));\n  background: -webkit-radial-gradient(50% 50%, ellipse cover, white 0%, #323232 100%);\n  background: -o-radial-gradient(50% 50%, ellipse cover, white 0%, #323232 100%);\n  background: -ms-radial-gradient(50% 50%, ellipse cover, white 0%, #323232 100%);\n  background: radial-gradient(ellipse at 50% 50%, white 0%, #323232 100%);\n  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#aaaaaa', GradientType=1 ); }\n  #background canvas {\n    width: 100%; }\n  @media only screen and (max-width: 768px) {\n    #background {\n      background: white;\n      background: -moz-radial-gradient(center, ellipse cover, white 0%, #323232 100%);\n      background: -webkit-gradient(radial, center, 0px, center center, 100%, color-stop(0%, white), color-stop(100%, #323232));\n      background: -webkit-radial-gradient(center, ellipse cover, white 0%, #323232 100%);\n      background: -o-radial-gradient(center, ellipse cover, white 0%, #323232 100%);\n      background: -ms-radial-gradient(center, ellipse cover, white 0%, #323232 100%);\n      background: radial-gradient(ellipse at center, white 0%, #323232 100%);\n      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#aaaaaa', GradientType=1 ); } }\n  #background #threeBlur {\n    filter: blur(1px);\n    transition: all 1s ease; }\n    #background #threeBlur.blur {\n      filter: blur(3px);\n      transition: all 1s ease; }\n    #background #threeBlur.hidden {\n      display: none; }\n  #background #darken {\n    background-color: rgba(0, 0, 0, 0.3);\n    position: absolute;\n    position: absolute;\n    top: 0;\n    bottom: 0;\n    left: 0;\n    right: 0;\n    display: none; }\n    @media only screen and (max-width: 768px) {\n      #background #darken {\n        display: block; } }\n\n#classicContainer {\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  flex-direction: column;\n  overflow: hidden; }\n  #classicContainer #header {\n    flex: 0 0 150px;\n    padding: 30px; }\n    #classicContainer #header img {\n      display: inline-block;\n      vertical-align: middle;\n      height: 70px;\n      width: 70px;\n      margin-right: 10px; }\n    #classicContainer #header h1 {\n      display: inline-block;\n      vertical-align: middle;\n      font-size: 4em;\n      font-weight: 600;\n      margin: 0; }\n    #classicContainer #header span {\n      font-weight: 100; }\n    #classicContainer #header h2 {\n      font-size: 1.2em;\n      font-weight: 100;\n      margin: 0;\n      margin-top: 5px; }\n    #classicContainer #header #menu-btn {\n      position: absolute;\n      top: 0;\n      right: 0;\n      padding: 14px;\n      margin: 10px;\n      font-size: 1.3em;\n      z-index: 1;\n      cursor: pointer;\n      background-color: rgba(0, 0, 0, 0.2); }\n      @media only screen and (min-width: 768px) {\n        #classicContainer #header #menu-btn {\n          display: none; } }\n    @media only screen and (max-width: 768px) {\n      #classicContainer #header {\n        flex: 0 0 100px;\n        padding: 15px;\n        padding-top: 10px; }\n        #classicContainer #header h1 {\n          font-size: 3em; }\n        #classicContainer #header h2 {\n          font-size: 0.9em; }\n        #classicContainer #header #menu-btn {\n          display: inline-block; } }\n  #classicContainer #body {\n    flex: 1 0 auto;\n    display: flex;\n    height: 0px;\n    flex-direction: row; }\n    #classicContainer #body #menu {\n      flex: 0 0 250px;\n      padding-left: 15px; }\n      @media only screen and (max-width: 768px) {\n        #classicContainer #body #menu {\n          display: none; } }\n      #classicContainer #body #menu ul {\n        margin: 25px 0;\n        list-style-type: none;\n        padding: 0;\n        font-size: 1.6em;\n        font-weight: 100; }\n        #classicContainer #body #menu ul li {\n          cursor: pointer;\n          padding: 5px 10px; }\n          #classicContainer #body #menu ul li:hover {\n            background-color: #fff;\n            opacity: 0.8;\n            color: #727272;\n            font-weight: 300; }\n        #classicContainer #body #menu ul a.active li {\n          border-left: 5px solid #fff; }\n      @media only screen and (max-width: 768px) {\n        #classicContainer #body #menu {\n          background-color: rgba(0, 0, 0, 0.5);\n          margin-left: 15px;\n          margin-right: 15px;\n          width: 60%;\n          padding: 0; }\n          #classicContainer #body #menu ul {\n            padding: 10px; } }\n    #classicContainer #body #contentContainer {\n      position: relative;\n      flex: 1 1 auto;\n      display: flex;\n      overflow-y: auto; }\n      #classicContainer #body #contentContainer .centeredContainer {\n        display: flex;\n        flex: 1 0 auto;\n        align-items: center;\n        justify-content: center; }\n        #classicContainer #body #contentContainer .centeredContainer .centered {\n          margin-top: -100px; }\n      #classicContainer #body #contentContainer #valueProp h1 {\n        font-size: 3.5em;\n        margin: 20px; }\n        @media only screen and (max-width: 768px) {\n          #classicContainer #body #contentContainer #valueProp h1 {\n            font-size: 1.9em; } }\n        #classicContainer #body #contentContainer #valueProp h1 span {\n          background-color: rgba(0, 0, 0, 0.5);\n          padding: 5px 10px; }\n      #classicContainer #body #contentContainer #services {\n        padding: 30px;\n        background-color: rgba(0, 0, 0, 0.5); }\n        #classicContainer #body #contentContainer #services h1 {\n          margin: 0;\n          font-size: 2.5em; }\n          @media only screen and (max-width: 768px) {\n            #classicContainer #body #contentContainer #services h1 {\n              font-size: 1.6em; } }\n      #classicContainer #body #contentContainer #contact h1 {\n        margin: 20px; }\n        #classicContainer #body #contentContainer #contact h1 span {\n          background-color: rgba(0, 0, 0, 0.5);\n          font-size: 2.5em;\n          padding: 5px 10px; }\n          @media only screen and (max-width: 768px) {\n            #classicContainer #body #contentContainer #contact h1 span {\n              font-size: 1.2em; } }\n      #classicContainer #body #contentContainer #contact .button {\n        text-align: right;\n        margin-top: 100px; }\n        @media only screen and (max-width: 768px) {\n          #classicContainer #body #contentContainer #contact .button {\n            text-align: center; } }\n        #classicContainer #body #contentContainer #contact .button a {\n          background-color: rgba(255, 255, 255, 0.9);\n          color: #5a5a5a;\n          font-size: 2em;\n          padding: 20px 50px;\n          box-shadow: 10px 10px 70px 0px rgba(0, 0, 0, 0.5);\n          transition: all 0.3s ease;\n          border-radius: 5px; }\n          #classicContainer #body #contentContainer #contact .button a:hover {\n            background-color: white;\n            box-shadow: 10px 10px 70px 0px rgba(0, 0, 0, 0.7); }\n          @media only screen and (max-width: 768px) {\n            #classicContainer #body #contentContainer #contact .button a {\n              font-size: 1.5em; } }\n\n#workContainer #ourWork {\n  transition: all 0.5s ease;\n  overflow: hidden; }\n  #workContainer #ourWork.ourWork-appear {\n    opacity: 0; }\n    #workContainer #ourWork.ourWork-appear.ourWork-appear-active {\n      opacity: 1; }\n  #workContainer #ourWork #viewer #slideWrapper {\n    display: flex;\n    transition: all .5s ease; }\n  #workContainer #ourWork .slide {\n    position: relative;\n    width: 100%;\n    flex: 0 0 100%; }\n    @media only screen and (max-width: 768px) {\n      #workContainer #ourWork .slide {\n        background-size: auto 70%; } }\n    #workContainer #ourWork .slide .hero {\n      position: relative;\n      height: 100%;\n      width: 100%;\n      background-size: cover;\n      background-repeat: no-repeat;\n      background-position: center center; }\n      #workContainer #ourWork .slide .hero .detailsBox {\n        background-color: rgba(0, 0, 0, 0.2);\n        position: absolute;\n        bottom: 0;\n        right: 0;\n        padding: 20px;\n        max-width: 50%;\n        margin: 0 auto;\n        margin-bottom: 40px;\n        cursor: pointer;\n        transition: all 0.5s ease; }\n        #workContainer #ourWork .slide .hero .detailsBox.open {\n          bottom: -100px; }\n        #workContainer #ourWork .slide .hero .detailsBox p {\n          margin: 0;\n          font-size: .8em; }\n        #workContainer #ourWork .slide .hero .detailsBox h2 {\n          margin-top: 0;\n          margin-bottom: 15px; }\n        @media only screen and (max-width: 768px) {\n          #workContainer #ourWork .slide .hero .detailsBox {\n            margin-bottom: 0;\n            width: 100%;\n            max-width: 100%;\n            min-width: 100%;\n            max-height: 200px;\n            overflow: auto; }\n            #workContainer #ourWork .slide .hero .detailsBox h2 {\n              font-size: 1em; }\n            #workContainer #ourWork .slide .hero .detailsBox p {\n              margin: 0;\n              font-size: 0.7em; } }\n    #workContainer #ourWork .slide .text {\n      color: #000; }\n      #workContainer #ourWork .slide .text p {\n        margin: 50px 10%; }\n  #workContainer #ourWork #controls {\n    position: absolute;\n    top: 0;\n    left: 0;\n    height: 100%;\n    width: 100%;\n    display: flex; }\n    #workContainer #ourWork #controls .navButton {\n      flex: 0 0 50%;\n      cursor: pointer;\n      position: relative;\n      display: flex;\n      align-items: center; }\n      #workContainer #ourWork #controls .navButton:hover .arrow {\n        opacity: 0.8;\n        transition: all 0.5s ease; }\n      #workContainer #ourWork #controls .navButton:hover #arrowLeft {\n        transform: translateX(-10px); }\n      #workContainer #ourWork #controls .navButton:hover #arrowRight {\n        transform: translateX(10px); }\n    #workContainer #ourWork #controls .arrow {\n      font-size: 5em;\n      opacity: 0.2;\n      cursor: pointer;\n      flex: 1 0 auto;\n      transition: all 0.5s ease;\n      text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); }\n    #workContainer #ourWork #controls #arrowLeft {\n      margin-left: 30px; }\n    #workContainer #ourWork #controls #arrowRight {\n      margin-right: 30px;\n      text-align: right; }\n    @media only screen and (max-width: 768px) {\n      #workContainer #ourWork #controls {\n        height: calc(100% - 60px); }\n        #workContainer #ourWork #controls .arrow {\n          margin-top: 60px;\n          font-size: 3em;\n          opacity: 0.8; }\n        #workContainer #ourWork #controls #arrowLeft {\n          margin-left: 10px; }\n        #workContainer #ourWork #controls #arrowRight {\n          margin-right: 10px; } }\n\n#workContainer .ourWork-leave {\n  opacity: 1; }\n  #workContainer .ourWork-leave.ourWork-leave-active {\n    opacity: 0; }\n\n#contentContainer #process {\n  display: flex;\n  flex: 1 1 auto;\n  justify-content: center;\n  align-items: center; }\n  @media only screen and (max-width: 1059px) {\n    #contentContainer #process {\n      align-items: flex-start; } }\n  #contentContainer #process .stepsContainer {\n    flex: 1 1 auto;\n    max-width: 810px;\n    display: flex;\n    flex-wrap: wrap;\n    justify-content: center;\n    overflow-y: auto; }\n    @media only screen and (max-width: 1059px) {\n      #contentContainer #process .stepsContainer {\n        margin: 15px 10px; } }\n    #contentContainer #process .stepsContainer .step {\n      position: relative;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n      flex-direction: column;\n      flex: 0 0 250px;\n      height: 250px;\n      margin: 10px;\n      background-color: rgba(0, 0, 0, 0.5); }\n      @media only screen and (max-width: 1059px) {\n        #contentContainer #process .stepsContainer .step {\n          flex: 1 1 45%;\n          min-width: 230px; } }\n      #contentContainer #process .stepsContainer .step h2 {\n        margin-bottom: 0;\n        margin-top: 30px;\n        font-weight: 200; }\n      #contentContainer #process .stepsContainer .step:hover {\n        background-color: rgba(0, 0, 0, 0.8); }\n        #contentContainer #process .stepsContainer .step:hover .fa, #contentContainer #process .stepsContainer .step:hover .far, #contentContainer #process .stepsContainer .step:hover .fas, #contentContainer #process .stepsContainer .step:hover h2 {\n          display: none; }\n        #contentContainer #process .stepsContainer .step:hover .details {\n          display: block; }\n      #contentContainer #process .stepsContainer .step .icon {\n        font-size: 5em; }\n      #contentContainer #process .stepsContainer .step .details {\n        display: none;\n        position: absolute;\n        top: 0;\n        left: 0;\n        right: 0;\n        bottom: 0;\n        padding: 20px;\n        overflow-y: auto; }\n        #contentContainer #process .stepsContainer .step .details p {\n          margin: 0;\n          font-size: 1em; }\n\n*, *:before, *:after {\n  box-sizing: border-box; }\n\nbody {\n  margin: 0;\n  font-family: 'Roboto', sans-serif;\n  color: #fff; }\n  body ::selection {\n    background: #2bd6c7;\n    /* WebKit/Blink Browsers */ }\n  body a {\n    text-decoration: inherit;\n    color: #fff; }\n\n#app, #app-container {\n  min-height: 100%; }\n\n#background {\n  z-index: -1; }\n\n#mobile-menu {\n  position: absolute;\n  padding: 20px;\n  top: 0;\n  left: -200px;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.9);\n  box-shadow: 0px 0px 0px 0px black;\n  transition: all 0.2s ease;\n  z-index: 2; }\n  #mobile-menu ul {\n    margin: 25px 0;\n    list-style-type: none;\n    padding: 0;\n    font-size: 1.6em;\n    font-weight: 100; }\n    #mobile-menu ul li {\n      cursor: pointer;\n      padding: 5px 10px; }\n    #mobile-menu ul a.active li {\n      border-left: 5px solid #fff; }\n  #mobile-menu.open {\n    left: 0px;\n    box-shadow: 0px 0px 10px 0px black; }\n\n#stickyHeader {\n  background-color: rgba(0, 0, 0, 0.6);\n  position: fixed;\n  width: 100%;\n  height: 80px;\n  z-index: 1;\n  display: flex;\n  align-items: center;\n  justify-content: space-between; }\n  #stickyHeader .logo {\n    display: flex;\n    align-items: center; }\n    #stickyHeader .logo img {\n      margin-left: 20px;\n      display: inline-block;\n      vertical-align: middle;\n      height: 70px;\n      width: 70px;\n      margin-right: 10px; }\n      @media only screen and (max-width: 768px) {\n        #stickyHeader .logo img {\n          margin-left: 10px; } }\n    #stickyHeader .logo h1 {\n      flex-shrink: 0; }\n    #stickyHeader .logo span {\n      font-weight: 200; }\n    #stickyHeader .logo h2 {\n      margin: 0 40px;\n      font-size: .9em;\n      font-weight: 200;\n      overflow: hidden;\n      text-overflow: ellipsis;\n      display: -webkit-box;\n      -webkit-line-clamp: 2;\n      -webkit-box-orient: vertical; }\n      @media only screen and (max-width: 768px) {\n        #stickyHeader .logo h2 {\n          display: none; } }\n  #stickyHeader .menu {\n    flex-shrink: 0;\n    margin-right: 20px; }\n    @media only screen and (max-width: 768px) {\n      #stickyHeader .menu {\n        display: none; } }\n    #stickyHeader .menu a {\n      padding: 0;\n      font-size: 1.2em;\n      font-weight: 200;\n      cursor: pointer;\n      padding: 5px 10px;\n      margin: 0 1px; }\n      #stickyHeader .menu a:hover {\n        background-color: #fff;\n        opacity: 0.8;\n        color: #000; }\n      #stickyHeader .menu a.active {\n        box-shadow: inset 0px -2px 0px #fff; }\n  #stickyHeader #menu-btn {\n    padding: 20px;\n    font-size: 1.5em; }\n    @media only screen and (min-width: 768px) {\n      #stickyHeader #menu-btn {\n        display: none; } }\n\n.noselect {\n  -webkit-touch-callout: none;\n  /* iOS Safari */\n  -webkit-user-select: none;\n  /* Safari */\n  -khtml-user-select: none;\n  /* Konqueror HTML */\n  -moz-user-select: none;\n  /* Firefox */\n  -ms-user-select: none;\n  /* Internet Explorer/Edge */\n  user-select: none;\n  /* Non-prefixed version, currently\n                                  supported by Chrome and Opera */ }\n", ""]);
 
 	// exports
 

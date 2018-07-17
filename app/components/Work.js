@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom';
 import slideData from '../slideData';
 import Swipeable from 'react-swipeable';
 
+import Projects from './Projects';
+
 class Work extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       page: 0,
-      length: slideData.length,
+      length: 0,
       slidePosition: 0,
       viewerWidth: null
     }
@@ -24,6 +26,7 @@ class Work extends React.Component {
   };
 
   handleNext = () => {
+    console.log('length', this.state.length);
     // if reached the end of the slideshow
     let nextPage;
     if (this.state.page+1 > this.state.length-1) {
@@ -31,6 +34,7 @@ class Work extends React.Component {
     } else {
       nextPage = this.state.page + 1
     }
+    window.scrollTo(0, 0);
     this.setState({
       page: nextPage,
       slidePosition: nextPage * this.state.viewerWidth
@@ -56,8 +60,14 @@ class Work extends React.Component {
     // for full screen use window.innerWidth
     // console.log('updating viewer width!');
     this.setState({
-      viewerWidth: document.getElementById("viewer").offsetWidth,
-      slidePosition: this.state.page * document.getElementById("viewer").offsetWidth
+      viewerWidth: document.getElementById("projectsWrapper").offsetWidth,
+      slidePosition: this.state.page * document.getElementById("projectsWrapper").offsetWidth
+    });
+  }
+
+  countProjects = () => {
+    this.setState({
+      length: document.getElementsByClassName("project").length
     });
   }
 
@@ -69,6 +79,7 @@ class Work extends React.Component {
     window.addEventListener("resize", this.updateViewerWidth);
     document.addEventListener("keydown", this.handleKeyDown);
     this.updateViewerWidth();
+    this.countProjects();
   }
 
   componentWillUnmount = () => {
@@ -78,19 +89,16 @@ class Work extends React.Component {
 
   render() {
     // Build slides from slideData Object
-    const slides = slideData.map((object, index) =>
-      <Slide key={index} title={object.title} image={object.image} description={object.description} />
-    );
+    // const projects = slideData.map((object, index) =>
+    //   <Project key={index} title={object.title} image={object.image} description={object.description} />
+    // );
 
     return (
       <div id="ourWork">
 
-        <div id="viewer">
-          <div id="slideWrapper" style={{transform: `translateX(-${this.state.slidePosition}px)`}}>
-            {slides}
-          </div>
-        </div>
+        <Projects slidePosition={this.state.slidePosition} />
 
+        {/* SWIPABLE area and arrow controls */}
         <Swipeable onSwipedRight={this.handlePrevious} onSwipedLeft={this.handleNext} style={{touchAction: 'none'}}>
           <div id="controls">
             <div id="back" className="navButton" onClick={this.handlePrevious}>
@@ -102,18 +110,21 @@ class Work extends React.Component {
           </div>
         </Swipeable>
 
+        {/* STICKY FOOTER NAV */}
+        <div id="stickyFooter">
+          <div id="back" className="navButton" onClick={this.handlePrevious}>
+            <div id="arrowLeft" className="arrow"><i className="fa fa-chevron-left" aria-hidden="true"></i></div>
+          </div>
+          <div id="next" className="navButton" onClick={this.handleNext}>
+            <div id="arrowRight" className="arrow"><i className="fa fa-chevron-right" aria-hidden="true"></i></div>
+          </div>
+        </div>
+
       </div>
     );
   }
 };
 
-const Slide = (props) => (
-  <div className='slide' style={{
-      backgroundImage: `url("${props.image}")`
-    }}>
-    <DetailsBox title={props.title} description={props.description}/>
-  </div>
-)
 
 class DetailsBox extends React.Component {
   constructor(props) {

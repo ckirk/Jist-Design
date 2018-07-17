@@ -80,7 +80,7 @@ const BasicContainer = (props) => (
     {/* HEADER */}
     <div id="header">
       <Link to='/'>
-          <img src='./images/logo_large_circle.png' alt=""/>
+          <img src='./images/logo_200.png' alt=""/>
         <h1>
           JIST <span>Design</span>
         </h1>
@@ -116,7 +116,7 @@ const StickyHeader = (props) => (
   <div id='stickyHeader'>
 
     <Link to='/' className='logo'>
-      <img src='./images/logo_large_circle.png' alt=""/>
+      <img src='./images/logo_200.png' alt=""/>
       <h1>
         JIST <span>Design</span>
       </h1>

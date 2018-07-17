@@ -1,101 +1,99 @@
 @import 'variables.scss';
 
 #workContainer {
-  padding-top: 80px;
+  background-color: #fff;
   #ourWork {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     transition: all 0.5s ease;
     overflow: hidden;
-    &.ourWork-appear {
-      opacity: 0;
-      &.ourWork-appear-active {
-        opacity: 1;
-      }
-    }
-    #viewer {
-      height: 100%;
-      width: 100%;
-      // border: 10px solid #fff;
-      // overflow: hidden;
 
-      // gradient (66% to right)
-      // background: $bkg-light;
-      // background: -moz-radial-gradient(50% 50%, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
-      // background: -webkit-gradient(radial, 50% 50%, 0px, center center, 100%, color-stop(0%, $bkg-light), color-stop(100%, $bkg-dark));
-      // background: -webkit-radial-gradient(50% 50%, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
-      // background: -o-radial-gradient(50% 50%, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
-      // background: -ms-radial-gradient(50% 50%, ellipse cover, $bkg-light 0%, $bkg-dark 100%);
-      // background: radial-gradient(ellipse at 50% 50%, $bkg-light 0%, $bkg-dark 100%);
-      // filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#aaaaaa', GradientType=1 );
-
-      #slideWrapper {
-        display: flex;
-        transition: all .5s ease;
-      }
+    #projectsWrapper {
+      display: flex;
+      align-items: flex-start;
+      transition: all .5s ease;
     }
-    .slide {
+
+    .project {
       position: relative;
-      height: 100%;
+      // background-color: teal;
       width: 100%;
       flex: 0 0 100%;
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center center;
       @media only screen and (max-width : 768px) {
         background-size: auto 70%;
       }
-      .detailsBox {
-        background-color: rgba(0,0,0,0.2);
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        padding: 20px;
-        max-width: 50%;
-        margin: 0 auto;
-        margin-bottom: 40px;
-        cursor: pointer;
-        transition: all 0.5s ease;
-        &.open {
-          bottom: -100px;
+      .hero {
+        position: relative;
+        height: 800px;
+        width: 100%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        .background {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background: radial-gradient(ellipse at 50% 50%, $bkg-light 0%, $bkg-dark 100%);
+          z-index: -1;
         }
-        p {
-          margin: 0;
-          font-size: .8em;
-        }
-        h2 {
-          margin-top: 0;
-          margin-bottom: 15px;
-        }
-        @media only screen and (max-width : 768px) {
-          margin-bottom: 0;
-          width: 100%;
-          max-width: 100%;
-          min-width: 100%;
-          max-height: 200px;
-          overflow: auto;
-          // bottom: -100px;
-          h2 {
-            font-size: 1em;
+        .detailsBox {
+          background-color: rgba(0,0,0,0.2);
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          padding: 20px;
+          max-width: 50%;
+          margin: 0 auto;
+          margin-bottom: 40px;
+          cursor: pointer;
+          transition: all 0.5s ease;
+          &.open {
+            bottom: -100px;
           }
           p {
             margin: 0;
-            font-size: 0.7em;
+            font-size: .8em;
+          }
+          h2 {
+            margin-top: 0;
+            margin-bottom: 15px;
+          }
+          @media only screen and (max-width : 768px) {
+            margin-bottom: 0;
+            width: 100%;
+            max-width: 100%;
+            min-width: 100%;
+            max-height: 200px;
+            overflow: auto;
+            // bottom: -100px;
+            h2 {
+              font-size: 1em;
+            }
+            p {
+              margin: 0;
+              font-size: 0.7em;
+            }
           }
         }
       }
+      .contentContainer {
+        .content {
+          position: relative;
+          color: #555;
+          width: 800px;
+          margin: 0 auto;
+          img {
+            max-width: 100%;
+          }
+        }
+      }
+
     }
     #controls {
       position: absolute;
       top: 0;
       left: 0;
-      height: 100%;
+      height: 800px;
       width: 100%;
       display: flex;
       .navButton {
@@ -146,6 +144,21 @@
           margin-right: 10px;
         }
       }
+    }
+    #stickyFooter {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      display: flex;
+      .navButton {
+        padding: 10px 20px;
+        background-color: rgba(0,0,0, 0.5);
+        cursor: pointer;
+        &:hover {
+          background-color: rgba(0,0,0, 0.7);
+        }
+      }
+
     }
   }
   .ourWork-leave {
