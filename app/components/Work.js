@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import slideData from '../slideData';
 import Swipeable from 'react-swipeable';
@@ -26,7 +26,7 @@ class Work extends React.Component {
   };
 
   handleNext = () => {
-    console.log('length', this.state.length);
+    // console.log('length', this.state.length);
     // if reached the end of the slideshow
     let nextPage;
     if (this.state.page+1 > this.state.length-1) {

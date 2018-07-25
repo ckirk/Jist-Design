@@ -1,5 +1,4 @@
 var THREE = require("three");
-var $ = require("jquery");
 var spikeyModel = require('./spikey_model.js');
 
 var Inject3dModel = function() {

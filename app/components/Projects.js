@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 
 // Image Imports
 import SnagTagHero from '../images/snagtag/st_hero.png'
@@ -29,7 +29,7 @@ const Projects = (props) => {
 
       <Project title='SnagTag' heroImage={SnagTagHero}>
         <h2>Real-time analytics for retail display items</h2>
-        <p>
+        {/* <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ullamcorper dignissim cras tincidunt lobortis feugiat vivamus at. In pellentesque massa placerat duis ultricies lacus sed. Ac tortor dignissim convallis aenean et tortor at risus. Eget arcu dictum varius duis at consectetur. Quisque egestas diam in arcu cursus euismod quis viverra. Ultrices vitae auctor eu augue ut. Laoreet sit amet cursus sit. Mauris commodo quis imperdiet massa tincidunt nunc. Risus nullam eget felis eget nunc lobortis. Odio pellentesque diam volutpat commodo sed egestas. Netus et malesuada fames ac turpis egestas maecenas. Felis imperdiet proin fermentum leo vel orci porta non pulvinar. Semper auctor neque vitae tempus quam. Nec sagittis aliquam malesuada bibendum arcu vitae elementum curabitur. Metus aliquam eleifend mi in nulla posuere.
         </p>
         <img src={SnagTagExplode} alt=""/>
@@ -43,19 +43,19 @@ const Projects = (props) => {
         <img src={SnagTagColors} alt=""/>
         <img src={SnagTagPrimitives} alt=""/>
         <img src={SnagTagOptions} alt=""/>
-        <img src={SnagTagLogo} alt=""/>
+        <img src={SnagTagLogo} alt=""/> */}
       </Project>
 
       <Project title='RAVN GRIP' heroImage={RAVNgrip}>
         <h2>Wireless augmented reality controller for M4 Carbine rifle</h2>
-        <p>
+        {/* <p>
           Leo duis ut diam quam. Sed odio morbi quis commodo odio aenean. Sed vulputate odio ut enim blandit volutpat maecenas volutpat. Tincidunt praesent semper feugiat nibh sed pulvinar. Vulputate eu scelerisque felis imperdiet. Non arcu risus quis varius quam quisque id. Quam pellentesque nec nam aliquam sem et tortor. Hac habitasse platea dictumst quisque sagittis purus sit amet. Ut morbi tincidunt augue interdum velit euismod in. Et sollicitudin ac orci phasellus egestas tellus. Erat nam at lectus urna duis convallis convallis tellus id.
-        </p>
+        </p> */}
       </Project>
 
       <Project title='iBeacon Hub' heroImage={HubHero}>
         <h2>Sleek wireless hub for retail data collection</h2>
-        <img src={HubMockup} alt=""/>
+        {/* <img src={HubMockup} alt=""/>
         <p>
           Leo duis ut diam quam. Sed odio morbi quis commodo odio aenean. Sed vulputate odio ut enim blandit volutpat maecenas volutpat. Tincidunt praesent semper feugiat nibh sed pulvinar. Vulputate eu scelerisque felis imperdiet. Non arcu risus quis varius quam quisque id. Quam pellentesque nec nam aliquam sem et tortor. Hac habitasse platea dictumst quisque sagittis purus sit amet. Ut morbi tincidunt augue interdum velit euismod in. Et sollicitudin ac orci phasellus egestas tellus. Erat nam at lectus urna duis convallis convallis tellus id.
         </p>
@@ -65,7 +65,7 @@ const Projects = (props) => {
         <p>
           Leo duis ut diam quam. Sed odio morbi quis commodo odio aenean. Sed vulputate odio ut enim blandit volutpat maecenas volutpat. Tincidunt praesent semper feugiat nibh sed pulvinar. Vulputate eu scelerisque felis imperdiet. Non arcu risus quis varius quam quisque id. Quam pellentesque nec nam aliquam sem et tortor. Hac habitasse platea dictumst quisque sagittis purus sit amet. Ut morbi tincidunt augue interdum velit euismod in. Et sollicitudin ac orci phasellus egestas tellus. Erat nam at lectus urna duis convallis convallis tellus id.
         </p>
-        <img src={HubLoop} alt=""/>
+        <img src={HubLoop} alt=""/> */}
       </Project>
 
       <Project title='RAVN CAM' heroImage={RAVNcam}>
@@ -98,7 +98,7 @@ const Project = (props) => (
         <h1>{props.title}</h1>
         {props.children}
         <div className="logo">
-          <img src={JistLogo} alt=""/>
+          {/* <img src={JistLogo} alt=""/> */}
         </div>
       </div>
     </div>
