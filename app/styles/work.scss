@@ -2,6 +2,7 @@
 
 #workContainer {
   background-color: #fff;
+  min-height: 100%;
   #ourWork {
     transition: all 0.5s ease;
     overflow: hidden;
@@ -104,6 +105,7 @@
             font-weight: 600;
             @media only screen and (max-width : 768px) {
               margin-top: 0;
+              font-size: 1.8em;
             }
             margin-top: 20;
             margin-bottom: 0;
@@ -112,6 +114,9 @@
             font-size: 1.5em;
             font-weight: 300;
             margin-top: 10px;
+            @media only screen and (max-width : 768px) {
+              font-size: 1em;
+            }
           }
           img {
             max-width: 100%;
